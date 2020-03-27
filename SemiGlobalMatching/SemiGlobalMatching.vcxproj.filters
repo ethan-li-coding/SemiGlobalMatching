@@ -27,6 +27,12 @@
     <ClInclude Include="SemiGlobalMatching.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="sgm_util.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sgm_types.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -37,6 +43,9 @@
     </ClCompile>
     <ClCompile Include="SemiGlobalMatching.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sgm_util.cpp">
+      <Filter>Header Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
