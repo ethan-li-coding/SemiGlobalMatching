@@ -18,16 +18,16 @@ public:
 
 	/** \brief SGM参数结构体 */
 	struct SGMOption {
-		uint8	num_paths;		// 聚合路径数
+		uint8	num_paths;		// 聚合路径数 4 and 8
 		sint32  min_disparity;	// 最小视差
 		sint32	max_disparity;	// 最大视差
 
 		// P1,P2 
-		// P2 = P2_int / (Ip-Iq)
+		// P2 = P2_init / (Ip-Iq)
 		sint32  p1;				// 惩罚项参数P1
-		sint32  p2_int;			// 惩罚项参数P2
+		sint32  p2_init;		// 惩罚项参数P2
 
-		SGMOption(): num_paths(8), min_disparity(0), max_disparity(640), p1(10), p2_int(150) {
+		SGMOption(): num_paths(8), min_disparity(0), max_disparity(640), p1(10), p2_init(150) {
 		}
 
 	};
@@ -38,7 +38,7 @@ public:
 	 * \param height	输入，核线像对影像高
 	 * \param option	输入，SemiGlobalMatching参数
 	 */
-	bool Initialize(const uint32& width, const uint32& height, const SGMOption& option);
+	bool Initialize(const sint32& width, const sint32& height, const SGMOption& option);
 
 	/**
 	 * \brief 执行匹配
@@ -77,10 +77,10 @@ private:
 	SGMOption option_;
 
 	/** \brief 影像宽	 */
-	uint32 width_;
+	sint32 width_;
 
 	/** \brief 影像高	 */
-	uint32 height_;
+	sint32 height_;
 
 	/** \brief 左影像数据	 */
 	const uint8* img_left_;
@@ -95,11 +95,31 @@ private:
 	uint32* census_right_;
 	
 	/** \brief 初始匹配代价	*/
-	uint16* cost_init_;
+	uint8* cost_init_;
 	
 	/** \brief 聚合匹配代价	*/
 	uint16* cost_aggr_;
-	
+
+	// ↘ ↓ ↙   5  3  7
+	// →    ←	 1    2
+	// ↗ ↑ ↖   8  4  6
+	/** \brief 聚合匹配代价-方向1	*/
+	uint8* cost_aggr_1_;
+	/** \brief 聚合匹配代价-方向2	*/
+	uint8* cost_aggr_2_;
+	/** \brief 聚合匹配代价-方向3	*/
+	uint8* cost_aggr_3_;
+	/** \brief 聚合匹配代价-方向4	*/
+	uint8* cost_aggr_4_;
+	/** \brief 聚合匹配代价-方向5	*/
+	uint8* cost_aggr_5_;
+	/** \brief 聚合匹配代价-方向6	*/
+	uint8* cost_aggr_6_;
+	/** \brief 聚合匹配代价-方向7	*/
+	uint8* cost_aggr_7_;
+	/** \brief 聚合匹配代价-方向8	*/
+	uint8* cost_aggr_8_;
+
 	/** \brief 左影像视差图	*/
 	float32* disp_left_;
 

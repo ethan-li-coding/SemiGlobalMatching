@@ -52,7 +52,7 @@ int main(int argv,char** argc)
     sgm_option.min_disparity = 0;
     sgm_option.max_disparity = 64;
     sgm_option.p1 = 10;
-    sgm_option.p2_int = 150;
+    sgm_option.p2_init = 1500;
 
     SemiGlobalMatching sgm;
 

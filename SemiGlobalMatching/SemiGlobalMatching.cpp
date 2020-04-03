@@ -7,13 +7,18 @@
 #include "SemiGlobalMatching.h"
 #include "sgm_util.h"
 #include <algorithm>
+#include <vector>
+#include <cassert>
 
 SemiGlobalMatching::SemiGlobalMatching(): width_(0), height_(0), img_left_(nullptr), img_right_(nullptr),
-                                          census_left_(nullptr),
-                                          census_right_(nullptr),
-                                          cost_init_(nullptr),
-                                          cost_aggr_(nullptr),
-                                          disp_left_(nullptr), is_initialized_(false)
+                                          census_left_(nullptr), census_right_(nullptr),
+                                          cost_init_(nullptr), cost_aggr_(nullptr),
+										  cost_aggr_1_(nullptr), cost_aggr_2_(nullptr),
+                                          cost_aggr_3_(nullptr), cost_aggr_4_(nullptr),
+                                          cost_aggr_5_(nullptr), cost_aggr_6_(nullptr),
+                                          cost_aggr_7_(nullptr), cost_aggr_8_(nullptr),
+                                          disp_left_(nullptr), 
+										  is_initialized_(false)
 {
 }
 
@@ -24,7 +29,7 @@ SemiGlobalMatching::~SemiGlobalMatching()
     is_initialized_ = false;
 }
 
-bool SemiGlobalMatching::Initialize(const uint32& width, const uint32& height, const SGMOption& option)
+bool SemiGlobalMatching::Initialize(const sint32& width, const sint32& height, const SGMOption& option)
 {
     // ··· 赋值
     
@@ -44,13 +49,23 @@ bool SemiGlobalMatching::Initialize(const uint32& width, const uint32& height, c
     census_left_ = new uint32[width * height]();
     census_right_ = new uint32[width * height]();
 
-    // 匹配代价（初始/聚合）
+    // 视差范围
     const sint32 disp_range = option.max_disparity - option.min_disparity;
     if (disp_range <= 0) {
         return false;
     }
-    cost_init_ = new uint16[width * height * disp_range]();
-    cost_aggr_ = new uint16[width * height * disp_range]();
+
+    // 匹配代价（初始/聚合）
+    cost_init_  = new uint8[width * height * disp_range]();
+    cost_aggr_  = new uint16[width * height * disp_range]();
+    cost_aggr_1_ = new uint8[width * height * disp_range]();
+    cost_aggr_2_ = new uint8[width * height * disp_range]();
+    cost_aggr_3_ = new uint8[width * height * disp_range]();
+    cost_aggr_4_ = new uint8[width * height * disp_range]();
+    cost_aggr_5_ = new uint8[width * height * disp_range]();
+    cost_aggr_6_ = new uint8[width * height * disp_range]();
+    cost_aggr_7_ = new uint8[width * height * disp_range]();
+    cost_aggr_8_ = new uint8[width * height * disp_range]();
 
     // 视差图
     disp_left_ = new float32[width * height]();
@@ -64,26 +79,19 @@ bool SemiGlobalMatching::Initialize(const uint32& width, const uint32& height, c
 void SemiGlobalMatching::Release()
 {
     // 释放内存
-    if (census_left_ != nullptr) {
-        delete[] census_left_;
-        census_left_ = nullptr;
-    }
-    if (census_right_ != nullptr) {
-        delete[] census_right_;
-        census_right_ = nullptr;
-    }
-    if (cost_init_ != nullptr) {
-        delete[] cost_init_;
-        cost_init_ = nullptr;
-    }
-    if (cost_aggr_ != nullptr) {
-        delete[] cost_aggr_;
-        cost_aggr_ = nullptr;
-    }
-    if (disp_left_ != nullptr) {
-        delete[] disp_left_;
-        disp_left_ = nullptr;
-    }
+    SAFE_DELETE(census_left_);
+    SAFE_DELETE(census_right_);
+    SAFE_DELETE(cost_init_);
+    SAFE_DELETE(cost_aggr_);
+    SAFE_DELETE(cost_aggr_1_);
+    SAFE_DELETE(cost_aggr_2_);
+    SAFE_DELETE(cost_aggr_3_);
+    SAFE_DELETE(cost_aggr_4_);
+    SAFE_DELETE(cost_aggr_5_);
+    SAFE_DELETE(cost_aggr_6_);
+    SAFE_DELETE(cost_aggr_7_);
+    SAFE_DELETE(cost_aggr_8_);
+    SAFE_DELETE(disp_left_);
 }
 
 
@@ -140,10 +148,14 @@ void SemiGlobalMatching::ComputeCost() const
 {
     const sint32& min_disparity = option_.min_disparity;
     const sint32& max_disparity = option_.max_disparity;
-    
+    const sint32 disp_range = max_disparity - min_disparity;
+    if (disp_range <= 0) {
+        return;
+    }
+
 	// 计算代价（基于Hamming距离）
-    for (uint32 i = 0u; i < height_; i++) {
-        for (uint32 j = 0u; j < width_; j++) {
+    for (sint32 i = 0; i < height_; i++) {
+        for (sint32 j = 0; j < width_; j++) {
 
             // 左影像census值
             const uint32 census_val_l = census_left_[i * width_ + j];
@@ -157,7 +169,7 @@ void SemiGlobalMatching::ComputeCost() const
                 const uint32 census_val_r = census_right_[i * width_ + j - d];
                 
         		// 计算匹配代价
-        		cost_init_[(d - min_disparity) * width_ * height_ + i * width_ + j] = sgm_util::Hamming32(census_val_l, census_val_r);
+                cost_init_[i * width_ * disp_range + j * disp_range + (d - min_disparity)] = sgm_util::Hamming32(census_val_l, census_val_r);
             }
         }
     }
@@ -165,19 +177,59 @@ void SemiGlobalMatching::ComputeCost() const
 
 void SemiGlobalMatching::CostAggregation() const
 {
+    // 路径聚合
+    // 1、左->右/右->左
+    // 2、上->下/下->上
+    // 3、左上->右下/右下->左上
+    // 4、右上->左上/左下->右上
+    //
+    // ↘ ↓ ↙   5  3  7
+    // →    ←	 1    2
+    // ↗ ↑ ↖   8  4  6
+    //
+    const auto& min_disparity = option_.min_disparity;
+    const auto& max_disparity = option_.max_disparity;
+    assert(max_disparity > min_disparity);
+
+    const sint32 size = width_ * height_ * (max_disparity - min_disparity);
+    if(size <= 0) {
+        return;
+    }
+
+    const auto& P1 = option_.p1;
+    const auto& P2_Int = option_.p2_init;
+
+    // 左右聚合
+    sgm_util::CostAggregateLeftRight(img_left_, width_, height_, min_disparity, max_disparity, P1, P2_Int, cost_init_, cost_aggr_1_, true);
+    sgm_util::CostAggregateLeftRight(img_left_, width_, height_, min_disparity, max_disparity, P1, P2_Int, cost_init_, cost_aggr_2_, false);
+    // 上下聚合
+    sgm_util::CostAggregateUpDown(img_left_, width_, height_, min_disparity, max_disparity, P1, P2_Int, cost_init_, cost_aggr_3_, true);
+    sgm_util::CostAggregateUpDown(img_left_, width_, height_, min_disparity, max_disparity, P1, P2_Int, cost_init_, cost_aggr_4_, false);
+
+
+    // 把4/8个方向加起来
+    for(sint32 i =0;i<size;i++) {
+    	cost_aggr_[i] = cost_aggr_1_[i] + cost_aggr_2_[i] + cost_aggr_3_[i] + cost_aggr_4_[i];
+    	if (option_.num_paths == 8) {
+            cost_aggr_[i] += cost_aggr_5_[i] + cost_aggr_6_[i] + cost_aggr_7_[i] + cost_aggr_8_[i];
+        }
+    }
 }
 
 void SemiGlobalMatching::ComputeDisparity() const
 {
     const sint32& min_disparity = option_.min_disparity;
     const sint32& max_disparity = option_.max_disparity;
+    const sint32 disp_range = max_disparity - min_disparity;
+    if(disp_range <= 0) {
+        return;
+    }
 
-    // 未实现聚合步骤，暂用初始代价值来代替
-    uint16* cost_ptr = cost_init_;
+    const auto cost_ptr = cost_aggr_;
 
     // 逐像素计算最优视差
-    for (uint32 i = 0u; i < height_; i++) {
-        for (uint32 j = 0u; j < width_; j++) {
+    for (sint32 i = 0; i < height_; i++) {
+        for (sint32 j = 0; j < width_; j++) {
             
             uint16 min_cost = UINT16_MAX;
             uint16 max_cost = 0;
@@ -185,7 +237,7 @@ void SemiGlobalMatching::ComputeDisparity() const
 
             // 遍历视差范围内的所有代价值，输出最小代价值及对应的视差值
             for (sint32 d = min_disparity; d < max_disparity; d++) {
-                const uint16& cost = cost_ptr[(d - min_disparity) * width_ * height_ + i * width_ + j];
+                const auto& cost = cost_ptr[i * width_ * disp_range + j * disp_range + d - min_disparity];
                 if(min_cost > cost) {
                     min_cost = cost;
                     best_disparity = d;
