@@ -6,9 +6,11 @@ SemiGlobalMatching立体匹配算法
 https://blog.csdn.net/rs_lys/article/details/105065660
 <br>
 https://blog.csdn.net/rs_lys/article/details/105142484
+<br>
+https://ethanli.blog.csdn.net/article/details/105316274
 
 # 环境
-windows10/visual studio 2015
+windows10 / visual studio 2015
 
 # 第三方库
 opencv310
