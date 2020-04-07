@@ -1,3 +1,8 @@
+/* -*-c++-*- SemiGlobalMatching - Copyright (C) 2020.
+* Author	: Ethan Li <ethan.li.whu@gmail.com>
+* Describe	: implement of sgm_util
+*/
+
 #pragma once
 #include "sgm_types.h"
 
@@ -24,7 +29,7 @@ namespace sgm_util
 
 
 	/**
-	 * \brief 
+	 * \brief 左右路径聚合
 	 * \param img_data			输入，影像数据
 	 * \param width				输入，影像宽
 	 * \param height			输入，影像高
@@ -40,7 +45,7 @@ namespace sgm_util
 		const sint32& p1,const sint32& p2_init, const uint8* cost_init, uint8* cost_aggr, bool is_forward = true);
 
 	/**
-	 * \brief
+	 * \brief 上下路径聚合
 	 * \param img_data			输入，影像数据
 	 * \param width				输入，影像宽
 	 * \param height			输入，影像高
@@ -53,5 +58,37 @@ namespace sgm_util
 	 * \param is_forward		输入，是否为正方向（正方向为从上到下，反方向为从下到上）
 	 */
 	void CostAggregateUpDown(const uint8* img_data, const sint32& width, const sint32& height, const sint32& min_disparity, const sint32& max_disparity,
+		const sint32& p1, const sint32& p2_init, const uint8* cost_init, uint8* cost_aggr, bool is_forward = true);
+
+	/**
+	 * \brief 对角线1路径聚合（左上<->右下）
+	 * \param img_data			输入，影像数据
+	 * \param width				输入，影像宽
+	 * \param height			输入，影像高
+	 * \param min_disparity		输入，最小视差
+	 * \param max_disparity		输入，最大视差
+	 * \param p1				输入，惩罚项P1
+	 * \param p2_init			输入，惩罚项P2_Init
+	 * \param cost_init			输入，初始代价数据
+	 * \param cost_aggr			输出，路径聚合代价数据
+	 * \param is_forward		输入，是否为正方向（正方向为从上到下，反方向为从下到上）
+	 */
+	void CostAggregateDagonal_1(const uint8* img_data, const sint32& width, const sint32& height, const sint32& min_disparity, const sint32& max_disparity,
+		const sint32& p1, const sint32& p2_init, const uint8* cost_init, uint8* cost_aggr, bool is_forward = true);
+
+	/**
+	 * \brief 对角线2路径聚合（右上<->左下）
+	 * \param img_data			输入，影像数据
+	 * \param width				输入，影像宽
+	 * \param height			输入，影像高
+	 * \param min_disparity		输入，最小视差
+	 * \param max_disparity		输入，最大视差
+	 * \param p1				输入，惩罚项P1
+	 * \param p2_init			输入，惩罚项P2_Init
+	 * \param cost_init			输入，初始代价数据
+	 * \param cost_aggr			输出，路径聚合代价数据
+	 * \param is_forward		输入，是否为正方向（正方向为从上到下，反方向为从下到上）
+	 */
+	void CostAggregateDagonal_2(const uint8* img_data, const sint32& width, const sint32& height, const sint32& min_disparity, const sint32& max_disparity,
 		const sint32& p1, const sint32& p2_init, const uint8* cost_init, uint8* cost_aggr, bool is_forward = true);
 }

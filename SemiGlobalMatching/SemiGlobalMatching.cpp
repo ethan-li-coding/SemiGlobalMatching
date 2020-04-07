@@ -205,7 +205,7 @@ void SemiGlobalMatching::CostAggregation() const
     // 上下聚合
     sgm_util::CostAggregateUpDown(img_left_, width_, height_, min_disparity, max_disparity, P1, P2_Int, cost_init_, cost_aggr_3_, true);
     sgm_util::CostAggregateUpDown(img_left_, width_, height_, min_disparity, max_disparity, P1, P2_Int, cost_init_, cost_aggr_4_, false);
-
+  
 
     // 把4/8个方向加起来
     for(sint32 i =0;i<size;i++) {
