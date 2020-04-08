@@ -7,6 +7,8 @@ SemiGlobalMatching立体匹配算法，学习SGM C++实现的好资源
 [手把手教你编写SGM双目立体匹配代码（基于C++，Github同步更新）（二）](https://blog.csdn.net/rs_lys/article/details/105142484)
 <br>
 [手把手教你编写SGM双目立体匹配代码（基于C++，Github同步更新）（三）（代价聚合）](https://ethanli.blog.csdn.net/article/details/105316274)
+<br>
+[手把手教你编写SGM双目立体匹配代码（基于C++，Github同步更新）（四）（代价聚合2）](https://blog.csdn.net/rs_lys/article/details/105396761)
 
 # 环境
 windows10 / visual studio 2015
@@ -47,17 +49,29 @@ SGM步骤图
 <div align=center>
 <img src="https://github.com/ethan-li-coding/SemiGlobalMatching/blob/master/doc/exp/%E8%81%9A%E5%90%88%EF%BC%88%E4%B8%8B-%E4%B8%8A%EF%BC%89.png" width=70%>
 </div>
-<br/>实验(5)：从左到右+从右到左聚合：
+<br/>实验(5)：从左上到右下聚合：
 <div align=center>
-<img src="https://github.com/ethan-li-coding/SemiGlobalMatching/blob/master/doc/exp/%E8%81%9A%E5%90%88%EF%BC%88%E5%B7%A6%E5%8F%B3%EF%BC%89.png" width=70%>
+<img src="https://github.com/ethan-li-coding/SemiGlobalMatching/blob/master/doc/exp/%E8%81%9A%E5%90%88%EF%BC%88%E5%B7%A6%E4%B8%8A-%E5%8F%B3%E4%B8%8B%EF%BC%89.png" width=70%>
 </div>
-<br/>实验(6)：从上到下+从下到上聚合：
+<br/>实验(6)：从右下到左上聚合：
 <div align=center>
-<img src="https://github.com/ethan-li-coding/SemiGlobalMatching/blob/master/doc/exp/%E8%81%9A%E5%90%88%EF%BC%88%E4%B8%8A%E4%B8%8B%EF%BC%89.png" width=70%>
+<img src="https://github.com/ethan-li-coding/SemiGlobalMatching/blob/master/doc/exp/%E8%81%9A%E5%90%88%EF%BC%88%E5%8F%B3%E4%B8%8B-%E5%B7%A6%E4%B8%8A%EF%BC%89.png" width=70%>
 </div>
-<br/>实验(7)：4-路径全聚合：
+<br/>实验(7)：从右上到左下聚合：
+<div align=center>
+<img src="https://github.com/ethan-li-coding/SemiGlobalMatching/blob/master/doc/exp/%E8%81%9A%E5%90%88%EF%BC%88%E5%8F%B3%E4%B8%8A-%E5%B7%A6%E4%B8%8B%EF%BC%89.png" width=70%>
+</div>
+<br/>实验(8)：从左下到右上聚合：
+<div align=center>
+<img src="https://github.com/ethan-li-coding/SemiGlobalMatching/blob/master/doc/exp/%E8%81%9A%E5%90%88%EF%BC%88%E5%B7%A6%E4%B8%8B-%E5%8F%B3%E4%B8%8A%EF%BC%89.png" width=70%>
+</div>
+<br/>实验(9)：4-路径全聚合：
 <div align=center>
 <img src="https://github.com/ethan-li-coding/SemiGlobalMatching/blob/master/doc/exp/%E8%81%9A%E5%90%88%EF%BC%884%E8%B7%AF%E5%BE%84%EF%BC%89.png" width=70%>
+</div>
+<br/>实验(10)：8-路径全聚合：
+<div align=center>
+<img src="https://github.com/ethan-li-coding/SemiGlobalMatching/blob/master/doc/exp/%E8%81%9A%E5%90%88%EF%BC%888%E8%B7%AF%E5%BE%84%EF%BC%89.png" width=70%>
 </div>
 
 ## Github图片不显示的解决办法
