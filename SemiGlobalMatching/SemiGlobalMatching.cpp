@@ -31,31 +31,31 @@ SemiGlobalMatching::~SemiGlobalMatching()
 
 bool SemiGlobalMatching::Initialize(const sint32& width, const sint32& height, const SGMOption& option)
 {
-    // ¡¤¡¤¡¤ ¸³Öµ
+    // Â·Â·Â· èµ‹å€¼
     
-	// Ó°Ïñ³ß´ç
+	// å½±åƒå°ºå¯¸
     width_ = width;
     height_ = height;
-    // SGM²ÎÊı
+    // SGMå‚æ•°
     option_ = option;
 
     if(width == 0 || height == 0) {
         return false;
     }
 
-    //¡¤¡¤¡¤ ¿ª±ÙÄÚ´æ¿Õ¼ä
+    //Â·Â·Â· å¼€è¾Ÿå†…å­˜ç©ºé—´
 
-    // censusÖµ£¨×óÓÒÓ°Ïñ£©
+    // censuså€¼ï¼ˆå·¦å³å½±åƒï¼‰
     census_left_ = new uint32[width * height]();
     census_right_ = new uint32[width * height]();
 
-    // ÊÓ²î·¶Î§
+    // è§†å·®èŒƒå›´
     const sint32 disp_range = option.max_disparity - option.min_disparity;
     if (disp_range <= 0) {
         return false;
     }
 
-    // Æ¥Åä´ú¼Û£¨³õÊ¼/¾ÛºÏ£©
+    // åŒ¹é…ä»£ä»·ï¼ˆåˆå§‹/èšåˆï¼‰
     cost_init_  = new uint8[width * height * disp_range]();
     cost_aggr_  = new uint16[width * height * disp_range]();
     cost_aggr_1_ = new uint8[width * height * disp_range]();
@@ -67,7 +67,7 @@ bool SemiGlobalMatching::Initialize(const sint32& width, const sint32& height, c
     cost_aggr_7_ = new uint8[width * height * disp_range]();
     cost_aggr_8_ = new uint8[width * height * disp_range]();
 
-    // ÊÓ²îÍ¼
+    // è§†å·®å›¾
     disp_left_ = new float32[width * height]();
 
     is_initialized_ = census_left_ && census_right_ && cost_init_ && cost_aggr_ && disp_left_;
@@ -78,7 +78,7 @@ bool SemiGlobalMatching::Initialize(const sint32& width, const sint32& height, c
 
 void SemiGlobalMatching::Release()
 {
-    // ÊÍ·ÅÄÚ´æ
+    // é‡Šæ”¾å†…å­˜
     SAFE_DELETE(census_left_);
     SAFE_DELETE(census_right_);
     SAFE_DELETE(cost_init_);
@@ -107,19 +107,19 @@ bool SemiGlobalMatching::Match(const uint8* img_left, const uint8* img_right, fl
     img_left_ = img_left;
     img_right_ = img_right;
 
-    // census±ä»»
+    // censuså˜æ¢
     CensusTransform();
 
-    // ´ú¼Û¼ÆËã
+    // ä»£ä»·è®¡ç®—
     ComputeCost();
 
-    // ´ú¼Û¾ÛºÏ
+    // ä»£ä»·èšåˆ
     CostAggregation();
 
-    // ÊÓ²î¼ÆËã
+    // è§†å·®è®¡ç®—
     ComputeDisparity();
 
-    // Êä³öÊÓ²îÍ¼
+    // è¾“å‡ºè§†å·®å›¾
     memcpy(disp_left, disp_left_, width_ * height_ * sizeof(float32));
 
 	return true;
@@ -127,19 +127,19 @@ bool SemiGlobalMatching::Match(const uint8* img_left, const uint8* img_right, fl
 
 bool SemiGlobalMatching::Reset(const uint32& width, const uint32& height, const SGMOption& option)
 {
-    // ÊÍ·ÅÄÚ´æ
+    // é‡Šæ”¾å†…å­˜
     Release();
 
-    // ÖØÖÃ³õÊ¼»¯±ê¼Ç
+    // é‡ç½®åˆå§‹åŒ–æ ‡è®°
     is_initialized_ = false;
 
-    // ³õÊ¼»¯
+    // åˆå§‹åŒ–
     return Initialize(width, height, option);
 }
 
 void SemiGlobalMatching::CensusTransform() const
 {
-	// ×óÓÒÓ°Ïñcensus±ä»»
+	// å·¦å³å½±åƒcensuså˜æ¢
     sgm_util::census_transform_5x5(img_left_, census_left_, width_, height_);
     sgm_util::census_transform_5x5(img_right_, census_right_, width_, height_);
 }
@@ -153,23 +153,25 @@ void SemiGlobalMatching::ComputeCost() const
         return;
     }
 
-	// ¼ÆËã´ú¼Û£¨»ùÓÚHamming¾àÀë£©
+	// è®¡ç®—ä»£ä»·ï¼ˆåŸºäºHammingè·ç¦»ï¼‰
     for (sint32 i = 0; i < height_; i++) {
         for (sint32 j = 0; j < width_; j++) {
 
-            // ×óÓ°ÏñcensusÖµ
+            // å·¦å½±åƒcensuså€¼
             const uint32 census_val_l = census_left_[i * width_ + j];
 
-            // ÖğÊÓ²î¼ÆËã´ú¼ÛÖµ
+            // é€è§†å·®è®¡ç®—ä»£ä»·å€¼
         	for (sint32 d = min_disparity; d < max_disparity; d++) {
+                auto& cost = cost_init_[i * width_ * disp_range + j * disp_range + (d - min_disparity)];
                 if (j - d < 0 || j - d >= width_) {
+                    cost = UINT8_MAX;
                     continue;
                 }
-                // ÓÒÓ°Ïñ¶ÔÓ¦ÏñµãµÄcensusÖµ
+                // å³å½±åƒå¯¹åº”åƒç‚¹çš„censuså€¼
                 const uint32 census_val_r = census_right_[i * width_ + j - d];
                 
-        		// ¼ÆËãÆ¥Åä´ú¼Û
-                cost_init_[i * width_ * disp_range + j * disp_range + (d - min_disparity)] = sgm_util::Hamming32(census_val_l, census_val_r);
+        		// è®¡ç®—åŒ¹é…ä»£ä»·
+                cost = sgm_util::Hamming32(census_val_l, census_val_r);
             }
         }
     }
@@ -177,15 +179,15 @@ void SemiGlobalMatching::ComputeCost() const
 
 void SemiGlobalMatching::CostAggregation() const
 {
-    // Â·¾¶¾ÛºÏ
-    // 1¡¢×ó->ÓÒ/ÓÒ->×ó
-    // 2¡¢ÉÏ->ÏÂ/ÏÂ->ÉÏ
-    // 3¡¢×óÉÏ->ÓÒÏÂ/ÓÒÏÂ->×óÉÏ
-    // 4¡¢ÓÒÉÏ->×óÉÏ/×óÏÂ->ÓÒÉÏ
+    // è·¯å¾„èšåˆ
+    // 1ã€å·¦->å³/å³->å·¦
+    // 2ã€ä¸Š->ä¸‹/ä¸‹->ä¸Š
+    // 3ã€å·¦ä¸Š->å³ä¸‹/å³ä¸‹->å·¦ä¸Š
+    // 4ã€å³ä¸Š->å·¦ä¸Š/å·¦ä¸‹->å³ä¸Š
     //
-    // ¨K ¡ı ¨L   5  3  7
-    // ¡ú    ¡û	 1    2
-    // ¨J ¡ü ¨I   8  4  6
+    // â†˜ â†“ â†™   5  3  7
+    // â†’    â†	 1    2
+    // â†— â†‘ â†–   8  4  6
     //
     const auto& min_disparity = option_.min_disparity;
     const auto& max_disparity = option_.max_disparity;
@@ -199,21 +201,21 @@ void SemiGlobalMatching::CostAggregation() const
     const auto& P1 = option_.p1;
     const auto& P2_Int = option_.p2_init;
 
-    // ×óÓÒ¾ÛºÏ
+    // å·¦å³èšåˆ
     sgm_util::CostAggregateLeftRight(img_left_, width_, height_, min_disparity, max_disparity, P1, P2_Int, cost_init_, cost_aggr_1_, true);
 	sgm_util::CostAggregateLeftRight(img_left_, width_, height_, min_disparity, max_disparity, P1, P2_Int, cost_init_, cost_aggr_2_, false);
-    // ÉÏÏÂ¾ÛºÏ
+    // ä¸Šä¸‹èšåˆ
 	sgm_util::CostAggregateUpDown(img_left_, width_, height_, min_disparity, max_disparity, P1, P2_Int, cost_init_, cost_aggr_3_, true);
 	sgm_util::CostAggregateUpDown(img_left_, width_, height_, min_disparity, max_disparity, P1, P2_Int, cost_init_, cost_aggr_4_, false);
-	// ¶Ô½ÇÏß1¾ÛºÏ
+	// å¯¹è§’çº¿1èšåˆ
     sgm_util::CostAggregateDagonal_1(img_left_, width_, height_, min_disparity, max_disparity, P1, P2_Int, cost_init_, cost_aggr_5_, true);
     sgm_util::CostAggregateDagonal_1(img_left_, width_, height_, min_disparity, max_disparity, P1, P2_Int, cost_init_, cost_aggr_6_, false);
-    // ¶Ô½ÇÏß2¾ÛºÏ
+    // å¯¹è§’çº¿2èšåˆ
     sgm_util::CostAggregateDagonal_2(img_left_, width_, height_, min_disparity, max_disparity, P1, P2_Int, cost_init_, cost_aggr_7_, true);
     sgm_util::CostAggregateDagonal_2(img_left_, width_, height_, min_disparity, max_disparity, P1, P2_Int, cost_init_, cost_aggr_8_, false);
 
 
-    // °Ñ4/8¸ö·½Ïò¼ÓÆğÀ´
+    // æŠŠ4/8ä¸ªæ–¹å‘åŠ èµ·æ¥
     for(sint32 i =0;i<size;i++) {
     	cost_aggr_[i] = cost_aggr_1_[i] + cost_aggr_2_[i] + cost_aggr_3_[i] + cost_aggr_4_[i];
     	if (option_.num_paths == 8) {
@@ -233,7 +235,7 @@ void SemiGlobalMatching::ComputeDisparity() const
 
     const auto cost_ptr = cost_aggr_;
 
-    // ÖğÏñËØ¼ÆËã×îÓÅÊÓ²î
+    // é€åƒç´ è®¡ç®—æœ€ä¼˜è§†å·®
     for (sint32 i = 0; i < height_; i++) {
         for (sint32 j = 0; j < width_; j++) {
             
@@ -241,7 +243,7 @@ void SemiGlobalMatching::ComputeDisparity() const
             uint16 max_cost = 0;
             sint32 best_disparity = 0;
 
-            // ±éÀúÊÓ²î·¶Î§ÄÚµÄËùÓĞ´ú¼ÛÖµ£¬Êä³ö×îĞ¡´ú¼ÛÖµ¼°¶ÔÓ¦µÄÊÓ²îÖµ
+            // éå†è§†å·®èŒƒå›´å†…çš„æ‰€æœ‰ä»£ä»·å€¼ï¼Œè¾“å‡ºæœ€å°ä»£ä»·å€¼åŠå¯¹åº”çš„è§†å·®å€¼
             for (sint32 d = min_disparity; d < max_disparity; d++) {
                 const auto& cost = cost_ptr[i * width_ * disp_range + j * disp_range + d - min_disparity];
                 if(min_cost > cost) {
@@ -251,7 +253,7 @@ void SemiGlobalMatching::ComputeDisparity() const
                 max_cost = std::max(max_cost, cost);
             }
 
-            // ×îĞ¡´ú¼ÛÖµ¶ÔÓ¦µÄÊÓ²îÖµ¼´ÎªÏñËØµÄ×îÓÅÊÓ²î
+            // æœ€å°ä»£ä»·å€¼å¯¹åº”çš„è§†å·®å€¼å³ä¸ºåƒç´ çš„æœ€ä¼˜è§†å·®
             if (max_cost != min_cost) {
                 disp_left_[i * width_ + j] = static_cast<float>(best_disparity);
             }
