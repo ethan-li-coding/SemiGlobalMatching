@@ -9,9 +9,11 @@ SemiGlobalMatching立体匹配算法，学习SGM C++实现的好资源
 [手把手教你编写SGM双目立体匹配代码（基于C++，Github同步更新）（三）（代价聚合）](https://ethanli.blog.csdn.net/article/details/105316274)
 <br>
 [手把手教你编写SGM双目立体匹配代码（基于C++，Github同步更新）（四）（代价聚合2）](https://blog.csdn.net/rs_lys/article/details/105396761)
+<br>
+[手把手教你编写SGM双目立体匹配代码（基于C++，Github同步更新）（五）（视差优化）](https://blog.csdn.net/rs_lys/article/details/105715526)
 
 # 环境
-windows10 / visual studio 2015
+windows10 / visual studio 2015&2019
 
 # 第三方库
 opencv310
@@ -72,6 +74,10 @@ SGM步骤图
 <br/>实验(10)：8-路径全聚合：
 <div align=center>
 <img src="https://github.com/ethan-li-coding/SemiGlobalMatching/blob/master/doc/exp/%E8%81%9A%E5%90%88%EF%BC%888%E8%B7%AF%E5%BE%84%EF%BC%89.png" width=70%>
+</div>
+<br/>实验(12)：一致性检查+中值滤波：
+<div align=center>
+<img src="https://github.com/ethan-li-coding/SemiGlobalMatching/blob/master/doc/exp/%E4%B8%80%E8%87%B4%E6%80%A7%E6%A3%80%E6%9F%A5%2B%E4%B8%AD%E5%80%BC%E6%BB%A4%E6%B3%A2.png" width=50%>
 </div>
 
 ## Github图片不显示的解决办法
