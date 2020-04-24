@@ -91,4 +91,16 @@ namespace sgm_util
 	 */
 	void CostAggregateDagonal_2(const uint8* img_data, const sint32& width, const sint32& height, const sint32& min_disparity, const sint32& max_disparity,
 		const sint32& p1, const sint32& p2_init, const uint8* cost_init, uint8* cost_aggr, bool is_forward = true);
+
+	
+	/**
+	 * \brief 中值滤波
+	 * \param in				输入，源数据 
+	 * \param out				输出，目标数据
+	 * \param width				输入，宽度
+	 * \param height			输入，高度
+	 * \param wnd_size			输入，窗口宽度
+	 */
+	void MedianFilter(const float32* in, float32* out, const sint32& width, const sint32& height, const sint32 wnd_size);
+
 }

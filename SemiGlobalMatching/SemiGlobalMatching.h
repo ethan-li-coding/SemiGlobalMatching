@@ -21,14 +21,22 @@ public:
 		uint8	num_paths;			// 聚合路径数 4 and 8
 		sint32  min_disparity;		// 最小视差
 		sint32	max_disparity;		// 最大视差
-		float	uniqueness_ratio;	// 唯一性约束阈值 （最小代价-次最小代价)/最小代价 > 阈值 为有效像素
+		
+		bool	is_check_unique;	// 是否检查唯一性
+		float32	uniqueness_ratio;	// 唯一性约束阈值 （最小代价-次最小代价)/最小代价 > 阈值 为有效像素
+
+		bool	is_check_lr;		// 是否检查左右一致性
+		float32	lrcheck_thres;		// 左右一致性约束阈值
 
 		// P1,P2 
 		// P2 = P2_init / (Ip-Iq)
 		sint32  p1;				// 惩罚项参数P1
 		sint32  p2_init;		// 惩罚项参数P2
 
-		SGMOption(): num_paths(8), min_disparity(0), max_disparity(640), uniqueness_ratio(0.95), p1(10), p2_init(150)
+		SGMOption(): num_paths(8), min_disparity(0), max_disparity(640), is_check_unique(true),
+		             uniqueness_ratio(0.95f), is_check_lr(true),
+		             lrcheck_thres(1.0f),
+		             p1(10), p2_init(150)
 		{
 		}
 	};
@@ -71,9 +79,16 @@ private:
 	/** \brief 视差计算	 */
 	void ComputeDisparity() const;
 
+	/** \brief 视差计算	 */
+	void ComputeDisparityRight() const;
+
+	/** \brief 一致性检查	 */
+	void LRCheck() const;
+
 	/** \brief 内存释放	 */
 	void Release();
-private:
+
+	private:
 	/** \brief SGM参数	 */
 	SGMOption option_;
 
@@ -123,6 +138,8 @@ private:
 
 	/** \brief 左影像视差图	*/
 	float32* disp_left_;
+	/** \brief 右影像视差图	*/
+	float32* disp_right_;
 
 	/** \brief 是否初始化标志	*/
 	bool is_initialized_;

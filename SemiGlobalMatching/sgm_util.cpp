@@ -458,3 +458,37 @@ void sgm_util::CostAggregateDagonal_2(const uint8* img_data, const sint32& width
 		}
 	}
 }
+
+void sgm_util::MedianFilter(const float32* in, float32* out, const sint32& width, const sint32& height,
+	const sint32 wnd_size)
+{
+	const sint32 radius = wnd_size / 2;
+	const sint32 size = wnd_size * wnd_size;
+
+	// 存储局部窗口内的数据
+	std::vector<float32> wnd_data;
+	wnd_data.reserve(size);
+
+	for (sint32 i = 0; i < height; i++) {
+		for (sint32 j = 0; j < width; j++) {
+			wnd_data.clear();
+
+			// 获取局部窗口数据
+			for (sint32 r = -radius; r <= radius; r++) {
+				for (sint32 c = -radius; c <= radius; c++) {
+					const sint32 row = i + r;
+					const sint32 col = j + c;
+					if (row >= 0 && row < height && col >= 0 && col < width) {
+						wnd_data.push_back(in[row * width + col]);
+					}
+				}
+			}
+
+			// 排序
+			std::sort(wnd_data.begin(), wnd_data.end());
+
+			// 取中值
+			out[i * width + j] = wnd_data[wnd_data.size() / 2];
+		}
+	}
+}
