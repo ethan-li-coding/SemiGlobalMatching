@@ -18,18 +18,19 @@ public:
 
 	/** \brief SGM参数结构体 */
 	struct SGMOption {
-		uint8	num_paths;		// 聚合路径数 4 and 8
-		sint32  min_disparity;	// 最小视差
-		sint32	max_disparity;	// 最大视差
+		uint8	num_paths;			// 聚合路径数 4 and 8
+		sint32  min_disparity;		// 最小视差
+		sint32	max_disparity;		// 最大视差
+		float	uniqueness_ratio;	// 唯一性约束阈值 （最小代价-次最小代价)/最小代价 > 阈值 为有效像素
 
 		// P1,P2 
 		// P2 = P2_init / (Ip-Iq)
 		sint32  p1;				// 惩罚项参数P1
 		sint32  p2_init;		// 惩罚项参数P2
 
-		SGMOption(): num_paths(8), min_disparity(0), max_disparity(640), p1(10), p2_init(150) {
+		SGMOption(): num_paths(8), min_disparity(0), max_disparity(640), uniqueness_ratio(0.95), p1(10), p2_init(150)
+		{
 		}
-
 	};
 public:
 	/**
