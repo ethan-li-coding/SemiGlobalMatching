@@ -2,15 +2,15 @@
 SemiGlobalMatching立体匹配算法，学习SGM C++实现的好资源
 
 # CSDN博客
-[手把手教你编写SGM双目立体匹配代码（基于C++，Github同步更新）（一）](https://blog.csdn.net/rs_lys/article/details/105065660)
+[手把手教你编写SGM双目立体匹配（基于C++，Github同步更新）（一）（框架与类设计）](https://blog.csdn.net/rs_lys/article/details/105065660)
 <br>
-[手把手教你编写SGM双目立体匹配代码（基于C++，Github同步更新）（二）](https://blog.csdn.net/rs_lys/article/details/105142484)
+[手把手教你编写SGM双目立体匹配（基于C++，Github同步更新）（二）（代价计算）](https://blog.csdn.net/rs_lys/article/details/105142484)
 <br>
-[手把手教你编写SGM双目立体匹配代码（基于C++，Github同步更新）（三）（代价聚合）](https://ethanli.blog.csdn.net/article/details/105316274)
+[手把手教你编写SGM双目立体匹配（基于C++，Github同步更新）（三）（代价聚合）](https://ethanli.blog.csdn.net/article/details/105316274)
 <br>
-[手把手教你编写SGM双目立体匹配代码（基于C++，Github同步更新）（四）（代价聚合2）](https://blog.csdn.net/rs_lys/article/details/105396761)
+[手把手教你编写SGM双目立体匹配（基于C++，Github同步更新）（四）（代价聚合2）](https://blog.csdn.net/rs_lys/article/details/105396761)
 <br>
-[手把手教你编写SGM双目立体匹配代码（基于C++，Github同步更新）（五）（视差优化）](https://blog.csdn.net/rs_lys/article/details/105715526)
+[手把手教你编写SGM双目立体匹配（基于C++，Github同步更新）（五）（视差优化）](https://blog.csdn.net/rs_lys/article/details/105715526)
 
 # 环境
 windows10 / visual studio 2015&2019
