@@ -79,7 +79,7 @@ SGM步骤图
 </div>
 <br/>实验(12)：一致性检查+中值滤波：
 <div align=center>
-<img src="https://github.com/ethan-li-coding/SemiGlobalMatching/blob/master/doc/exp/%E4%B8%80%E8%87%B4%E6%80%A7%E6%A3%80%E6%9F%A5%2B%E4%B8%AD%E5%80%BC%E6%BB%A4%E6%B3%A2.png" width=50%>
+<img src="https://github.com/ethan-li-coding/SemiGlobalMatching/blob/master/doc/exp/%E4%B8%80%E8%87%B4%E6%80%A7%E6%A3%80%E6%9F%A5%2B%E4%B8%AD%E5%80%BC%E6%BB%A4%E6%B3%A2.bmp" width=50%>
 </div>
 
 ## Github图片不显示的解决办法
