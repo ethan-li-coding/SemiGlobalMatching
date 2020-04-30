@@ -106,6 +106,7 @@ int main(int argv,char** argc)
    
     std::string disp_map_path = argc[3];
     cv::imwrite(disp_map_path, disp_mat);
+
     cv::imshow(" ”≤ÓÕº", disp_mat);
     cv::waitKey(0);
 
