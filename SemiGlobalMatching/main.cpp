@@ -50,16 +50,28 @@ int main(int argv,char** argc)
     const sint32 width = static_cast<uint32>(img_left.cols);
     const sint32 height = static_cast<uint32>(img_right.rows);
 
+    // SGMÆ¥Åä²ÎÊýÉè¼Æ
     SemiGlobalMatching::SGMOption sgm_option;
-    sgm_option.num_paths = 8;
+    // ¾ÛºÏÂ·¾¶Êý
+	sgm_option.num_paths = 8;
+	// ºòÑ¡ÊÓ²î·¶Î§
     sgm_option.min_disparity = 0;
     sgm_option.max_disparity = 64;
+    // Ò»ÖÂÐÔ¼ì²é
+    sgm_option.is_check_lr = true;
+    sgm_option.lrcheck_thres = 1.0f;
+    // Î¨Ò»ÐÔÔ¼Êø
+	sgm_option.is_check_unique = true;
     sgm_option.uniqueness_ratio = 1.0;
-    sgm_option.p1 = 10;
+    // ÌÞ³ýÐ¡Á¬Í¨Çø
+	sgm_option.is_remove_speckles = true;
+    sgm_option.min_speckle_aera = 30;
+    // ³Í·£ÏîP1¡¢P2
+	sgm_option.p1 = 10;
     sgm_option.p2_init = 1500;
 
+    // ¶¨ÒåSGMÆ¥ÅäÀàÊµÀý
     SemiGlobalMatching sgm;
-
 
     //¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤//
     // ³õÊ¼»¯
@@ -71,7 +83,7 @@ int main(int argv,char** argc)
 
     //¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤//
     // Æ¥Åä
-    auto disparity = new float32[width * height]();
+    auto disparity = new float32[uint32(width * height)]();
     if(!sgm.Match(img_left.data,img_right.data,disparity)) {
         std::cout << "SGMÆ¥ÅäÊ§°Ü£¡" << std::endl;
         return -2;
@@ -114,7 +126,8 @@ int main(int argv,char** argc)
 
     //¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤//
     // ÊÍ·ÅÄÚ´æ
-    delete[] disparity; disparity = nullptr;
+    delete[] disparity; 
+	disparity = nullptr;
 
     system("pause");
 	return 0;

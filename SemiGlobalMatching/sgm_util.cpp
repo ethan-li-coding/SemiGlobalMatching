@@ -8,6 +8,7 @@
 #include <algorithm>
 #include <cassert>
 #include <vector>
+#include <queue>
 
 void sgm_util::census_transform_5x5(const uint8* source, uint32* census, const sint32& width,
 	const sint32& height)
@@ -102,8 +103,8 @@ void sgm_util::CostAggregateLeftRight(const uint8* img_data, const sint32& width
 		}
 
 		// 自方向上第2个像素开始按顺序聚合
-		gray = *img_row;
 		for (sint32 j = 0; j < width - 1; j++) {
+			gray = *img_row;
 			uint8 min_cost = UINT8_MAX;
 			for (sint32 d = 0; d < disp_range; d++){
 				// Lr(p,d) = C(p,d) + min( Lr(p-r,d), Lr(p-r,d-1) + P1, Lr(p-r,d+1) + P1, min(Lr(p-r))+P2 ) - min(Lr(p-r))
@@ -130,7 +131,6 @@ void sgm_util::CostAggregateLeftRight(const uint8* img_data, const sint32& width
 			
 			// 像素值重新赋值
 			gray_last = gray;
-			gray = *img_row;
 		}
 	}
 }
@@ -180,8 +180,8 @@ void sgm_util::CostAggregateUpDown(const uint8* img_data, const sint32& width, c
 		}
 
 		// 自方向上第2个像素开始按顺序聚合
-		gray = *img_col;
 		for (sint32 i = 0; i < height - 1; i ++) {
+			gray = *img_col;
 			uint8 min_cost = UINT8_MAX;
 			for (sint32 d = 0; d < disp_range; d++) {
 				// Lr(p,d) = C(p,d) + min( Lr(p-r,d), Lr(p-r,d-1) + P1, Lr(p-r,d+1) + P1, min(Lr(p-r))+P2 ) - min(Lr(p-r))
@@ -208,7 +208,6 @@ void sgm_util::CostAggregateUpDown(const uint8* img_data, const sint32& width, c
 
 			// 像素值重新赋值
 			gray_last = gray;
-			gray = *img_col;
 		}
 	}
 }
@@ -283,8 +282,8 @@ void sgm_util::CostAggregateDagonal_1(const uint8* img_data, const sint32& width
 		}
 
 		// 自方向上第2个像素开始按顺序聚合
-		gray = *img_col;
 		for (sint32 i = 0; i < height - 1; i ++) {
+			gray = *img_col;
 			uint8 min_cost = UINT8_MAX;
 			for (sint32 d = 0; d < disp_range; d++) {
 				// Lr(p,d) = C(p,d) + min( Lr(p-r,d), Lr(p-r,d-1) + P1, Lr(p-r,d+1) + P1, min(Lr(p-r))+P2 ) - min(Lr(p-r))
@@ -331,7 +330,6 @@ void sgm_util::CostAggregateDagonal_1(const uint8* img_data, const sint32& width
 
 			// 像素值重新赋值
 			gray_last = gray;
-			gray = *img_col;
 		}
 	}
 }
@@ -406,8 +404,8 @@ void sgm_util::CostAggregateDagonal_2(const uint8* img_data, const sint32& width
 		}
 
 		// 自路径上第2个像素开始按顺序聚合
-		gray = *img_col;
 		for (sint32 i = 0; i < height - 1; i++) {
+			gray = *img_col;
 			uint8 min_cost = UINT8_MAX;
 			for (sint32 d = 0; d < disp_range; d++) {
 				// Lr(p,d) = C(p,d) + min( Lr(p-r,d), Lr(p-r,d-1) + P1, Lr(p-r,d+1) + P1, min(Lr(p-r))+P2 ) - min(Lr(p-r))
@@ -454,7 +452,6 @@ void sgm_util::CostAggregateDagonal_2(const uint8* img_data, const sint32& width
 
 			// 像素值重新赋值
 			gray_last = gray;
-			gray = *img_col;
 		}
 	}
 }
@@ -489,6 +486,68 @@ void sgm_util::MedianFilter(const float32* in, float32* out, const sint32& width
 
 			// 取中值
 			out[i * width + j] = wnd_data[wnd_data.size() / 2];
+		}
+	}
+}
+
+void sgm_util::RemoveSpeckles(float32* disparity_map, const sint32& width, const sint32& height,
+	const sint32& diff_insame, const uint32& min_speckle_aera, const float& invalid_val)
+{
+	assert(width > 0 && height > 0);
+	if (width < 0 || height < 0) {
+		return;
+	}
+
+	// 定义标记像素是否访问的数组
+	std::vector<bool> visited(uint32(width*height),false);
+	for(sint32 i=0;i<height;i++) {
+		for(sint32 j=0;j<width;j++) {
+			if (visited[i * width + j] || disparity_map[i*width+j] == invalid_val) {
+				// 跳过已访问的像素及无效像素
+				continue;
+			}
+
+			// 广度优先遍历，区域跟踪
+			// 把连通域面积小于阈值的区域视差全设为无效值
+			std::vector<std::pair<sint32, sint32>> vec;
+			vec.emplace_back(i, j);
+			visited[i * width + j] = true;
+			uint32 cur = 0;
+			uint32 next = 0;
+			do {
+				// 广度优先遍历区域跟踪	
+				next = vec.size();
+				for (uint32 k = cur; k < next; k++) {
+					const auto& pixel = vec[k];
+					const sint32 row = pixel.first;
+					const sint32 col = pixel.second;
+					const auto& disp_base = disparity_map[row * width + col];
+					// 8邻域遍历
+					for(int r=-1;r<=1;r++) {
+						for(int c=-1;c<=1;c++) {
+							if(r==0&&c==0) {
+								continue;
+							}
+							int rowr = row + r;
+							int colc = col + c;
+							if (rowr >= 0 && rowr < height && colc >= 0 && colc < width) {
+								if(!visited[rowr * width + colc] && abs(disparity_map[rowr * width + colc] - disp_base) <= diff_insame) {
+									vec.emplace_back(rowr, colc);
+									visited[rowr * width + colc] = true;
+								}
+							}
+						}
+					}
+				}
+				cur = next;
+			} while (next < vec.size());
+
+			// 把连通域面积小于阈值的区域视差全设为无效值
+			if(vec.size() < min_speckle_aera) {
+				for(auto& pix:vec) {
+					disparity_map[pix.first * width + pix.second] = invalid_val;
+				}
+			}
 		}
 	}
 }

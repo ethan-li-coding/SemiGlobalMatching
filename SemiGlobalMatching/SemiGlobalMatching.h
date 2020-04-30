@@ -28,14 +28,18 @@ public:
 		bool	is_check_lr;		// 是否检查左右一致性
 		float32	lrcheck_thres;		// 左右一致性约束阈值
 
+		bool	is_remove_speckles;	// 是否移除小的连通区
+		int		min_speckle_aera;	// 最小的连通区面积（像素数）
+
 		// P1,P2 
 		// P2 = P2_init / (Ip-Iq)
 		sint32  p1;				// 惩罚项参数P1
 		sint32  p2_init;		// 惩罚项参数P2
 
-		SGMOption(): num_paths(8), min_disparity(0), max_disparity(640), is_check_unique(true),
-		             uniqueness_ratio(0.95f), is_check_lr(true),
-		             lrcheck_thres(1.0f),
+		SGMOption(): num_paths(8), min_disparity(0), max_disparity(640), 
+					 is_check_unique(true), uniqueness_ratio(0.95f),
+					 is_check_lr(true), lrcheck_thres(1.0f),
+					 is_remove_speckles(true), min_speckle_aera(20),
 		             p1(10), p2_init(150)
 		{
 		}
