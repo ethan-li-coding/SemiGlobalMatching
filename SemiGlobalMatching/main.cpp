@@ -18,7 +18,8 @@
 /**
  * \brief 
  * \param argv 3
- * \param argc argc[1]:×óÓ°ÏñÂ·¾¶ argc[2]: ÓÒÓ°ÏñÂ·¾¶ argc[3]: ÊÓ²îÍ¼Â·¾¶
+ * \param argc argc[1]:×óÓ°ÏñÂ·¾¶ argc[2]: ÓÒÓ°ÏñÂ·¾¶ argc[3]: ÊÓ²îÍ¼Â·¾¶[optional]
+ * \param eg. $(SolutionDir)Data\cone\im2.png $(SolutionDir)Data\cone\im6.png $(SolutionDir)Data\cone\disp.bmp
  * \return 
  */
 int main(int argv,char** argc)
@@ -46,9 +47,19 @@ int main(int argv,char** argc)
 
 
     //¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤//
-    // SGMÆ¥ÅäÀàÊµÀý
     const sint32 width = static_cast<uint32>(img_left.cols);
     const sint32 height = static_cast<uint32>(img_right.rows);
+
+	// ×óÓÒÓ°ÏñµÄ»Ò¶ÈÊý¾Ý
+	unsigned char* bytes_left = new unsigned char[width*height];
+	unsigned char* bytes_right = new unsigned char[width*height];
+	for (int i = 0; i < height;i++) {
+		for (int j = 0; j < width;j++) {
+			bytes_left[i*width + j] = img_left.at<unsigned char>(i, j);
+			bytes_right[i*width + j] = img_right.at<unsigned char>(i, j);
+		}
+	}
+
 
     // SGMÆ¥Åä²ÎÊýÉè¼Æ
     SemiGlobalMatching::SGMOption sgm_option;
@@ -84,7 +95,7 @@ int main(int argv,char** argc)
     //¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤//
     // Æ¥Åä
     auto disparity = new float32[uint32(width * height)]();
-    if(!sgm.Match(img_left.data,img_right.data,disparity)) {
+    if(!sgm.Match(bytes_left,bytes_right,disparity)) {
         std::cout << "SGMÆ¥ÅäÊ§°Ü£¡" << std::endl;
         return -2;
     }
@@ -103,32 +114,27 @@ int main(int argv,char** argc)
             }
         }
     }
-   
-    std::string disp_map_path = argc[3];
-    cv::imwrite(disp_map_path, disp_mat);
+
+	if (argv >= 4) {
+		std::string disp_map_path = argc[3];
+		cv::imwrite(disp_map_path, disp_mat);
+	}
 
     cv::imshow("ÊÓ²îÍ¼", disp_mat);
-    cv::waitKey(0);
+	cv::Mat disp_color;
+	applyColorMap(disp_mat, disp_color, cv::COLORMAP_JET);
+	cv::imshow("ÊÓ²îÍ¼-Î±²Ê", disp_color);
 
-    // Êä³öÎ±ÈýÎ¬µãÔÆ(u,v,disparity£©,ÓÃµãÔÆä¯ÀÀÈí¼þä¯ÀÀ
-    FILE* fp_disp_cloud = nullptr;
-    fopen_s(&fp_disp_cloud, (disp_map_path+".cloud.txt").c_str(), "w");
-    if (fp_disp_cloud) {
-        for (sint32 i = 0; i < height; i++) {
-            for (sint32 j = 0; j < width; j++) {
-                const float32 disp = disparity[i * width + j];
-                if (disp != Invalid_Float) {
-                    fprintf_s(fp_disp_cloud, "%f %f %f %d %d %d\n", static_cast<float>(i), static_cast<float>(j), disp, img_left.data[i*width+j], img_left.data[i * width + j], img_left.data[i * width + j]);
-                }
-            }
-        }
-        fclose(fp_disp_cloud);
-    }
+	cv::waitKey(0);
 
     //¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤//
     // ÊÍ·ÅÄÚ´æ
     delete[] disparity; 
 	disparity = nullptr;
+	delete[] bytes_left;
+	bytes_left = nullptr;
+	delete[] bytes_right;
+	bytes_right = nullptr;
 
     system("pause");
 	return 0;
