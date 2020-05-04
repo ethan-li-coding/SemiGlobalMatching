@@ -6,6 +6,7 @@
 #pragma once
 
 #include "sgm_types.h"
+#include <vector>
 
 /**
  * \brief SemiGlobalMatching类（General implementation of Semi-Global Matching）
@@ -31,15 +32,18 @@ public:
 		bool	is_remove_speckles;	// 是否移除小的连通区
 		int		min_speckle_aera;	// 最小的连通区面积（像素数）
 
+		bool	is_fill_holes;		// 是否填充视差空洞
+
 		// P1,P2 
 		// P2 = P2_init / (Ip-Iq)
 		sint32  p1;				// 惩罚项参数P1
 		sint32  p2_init;		// 惩罚项参数P2
 
-		SGMOption(): num_paths(8), min_disparity(0), max_disparity(640), 
-					 is_check_unique(true), uniqueness_ratio(0.95f),
-					 is_check_lr(true), lrcheck_thres(1.0f),
-					 is_remove_speckles(true), min_speckle_aera(20),
+		SGMOption(): num_paths(8), min_disparity(0), max_disparity(640),
+		             is_check_unique(true), uniqueness_ratio(0.95f),
+		             is_check_lr(true), lrcheck_thres(1.0f),
+		             is_remove_speckles(true), min_speckle_aera(20),
+					 is_fill_holes(true),
 		             p1(10), p2_init(150)
 		{
 		}
@@ -87,7 +91,10 @@ private:
 	void ComputeDisparityRight() const;
 
 	/** \brief 一致性检查	 */
-	void LRCheck() const;
+	void LRCheck();
+
+	/** \brief 视差图填充 */
+	void FillHolesInDispMap();
 
 	/** \brief 内存释放	 */
 	void Release();
@@ -147,5 +154,10 @@ private:
 
 	/** \brief 是否初始化标志	*/
 	bool is_initialized_;
+
+	/** \brief 遮挡区像素集	*/
+	std::vector<std::pair<int, int>> occlusions_;
+	/** \brief 误匹配区像素集	*/
+	std::vector<std::pair<int, int>> mismatches_;
 };
 

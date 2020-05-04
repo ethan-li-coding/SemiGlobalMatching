@@ -112,7 +112,7 @@ void sgm_util::CostAggregateLeftRight(const uint8* img_data, const sint32& width
 				const uint16 l1 = cost_last_path[d + 1];
 				const uint16 l2 = cost_last_path[d] + P1;
 				const uint16 l3 = cost_last_path[d + 2] + P1;
-				const uint16 l4 = mincost_last_path + P2_Init / (abs(gray - gray_last) + 1);
+				const uint16 l4 = mincost_last_path + std::max(P1, P2_Init / (abs(gray - gray_last) + 1));
 				
 				const uint8 cost_s = cost + static_cast<uint8>(std::min(std::min(l1, l2), std::min(l3, l4)) - mincost_last_path);
 				
@@ -189,7 +189,7 @@ void sgm_util::CostAggregateUpDown(const uint8* img_data, const sint32& width, c
 				const uint16 l1 = cost_last_path[d + 1];
 				const uint16 l2 = cost_last_path[d] + P1;
 				const uint16 l3 = cost_last_path[d + 2] + P1;
-				const uint16 l4 = mincost_last_path + P2_Init / (abs(gray - gray_last) + 1);
+				const uint16 l4 = mincost_last_path + std::max(P1, P2_Init / (abs(gray - gray_last) + 1));
 
 				const uint8 cost_s = cost + static_cast<uint8>(std::min(std::min(l1, l2), std::min(l3, l4)) - mincost_last_path);
 
@@ -291,7 +291,7 @@ void sgm_util::CostAggregateDagonal_1(const uint8* img_data, const sint32& width
 				const uint16 l1 = cost_last_path[d + 1];
 				const uint16 l2 = cost_last_path[d] + P1;
 				const uint16 l3 = cost_last_path[d + 2] + P1;
-				const uint16 l4 = mincost_last_path + P2_Init / (abs(gray - gray_last) + 1);
+				const uint16 l4 = mincost_last_path + std::max(P1, P2_Init / (abs(gray - gray_last) + 1));
 
 				const uint8 cost_s = cost + static_cast<uint8>(std::min(std::min(l1, l2), std::min(l3, l4)) - mincost_last_path);
 
@@ -413,7 +413,7 @@ void sgm_util::CostAggregateDagonal_2(const uint8* img_data, const sint32& width
 				const uint16 l1 = cost_last_path[d + 1];
 				const uint16 l2 = cost_last_path[d] + P1;
 				const uint16 l3 = cost_last_path[d + 2] + P1;
-				const uint16 l4 = mincost_last_path + P2_Init / (abs(gray - gray_last) + 1);
+				const uint16 l4 = mincost_last_path + std::max(P1, P2_Init / (abs(gray - gray_last) + 1));
 
 				const uint8 cost_s = cost + static_cast<uint8>(std::min(std::min(l1, l2), std::min(l3, l4)) - mincost_last_path);
 
@@ -546,6 +546,7 @@ void sgm_util::RemoveSpeckles(float32* disparity_map, const sint32& width, const
 			if(vec.size() < min_speckle_aera) {
 				for(auto& pix:vec) {
 					disparity_map[pix.first * width + pix.second] = invalid_val;
+					
 				}
 			}
 		}

@@ -73,15 +73,17 @@ int main(int argv,char** argc)
     sgm_option.lrcheck_thres = 1.0f;
     // 唯一性约束
 	sgm_option.is_check_unique = true;
-    sgm_option.uniqueness_ratio = 1.0;
+    sgm_option.uniqueness_ratio = 0.99;
     // 剔除小连通区
 	sgm_option.is_remove_speckles = true;
     sgm_option.min_speckle_aera = 30;
     // 惩罚项P1、P2
 	sgm_option.p1 = 10;
-    sgm_option.p2_init = 1500;
-
-    // 定义SGM匹配类实例
+    sgm_option.p2_init = 150;
+	// 视差图填充
+	sgm_option.is_fill_holes = true;
+    
+	// 定义SGM匹配类实例
     SemiGlobalMatching sgm;
 
     //···············································································//
@@ -110,7 +112,7 @@ int main(int argv,char** argc)
                 disp_mat.data[i * width + j] = 0;
             }
             else {
-                disp_mat.data[i * width + j] = static_cast<uchar>(2.5 * static_cast<uchar>(disp));
+                disp_mat.data[i * width + j] = static_cast<uchar>(2.5*static_cast<uchar>(disp));
             }
         }
     }
