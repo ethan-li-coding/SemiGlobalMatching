@@ -18,14 +18,15 @@
 /**
  * \brief 
  * \param argv 3
- * \param argc argc[1]:左影像路径 argc[2]: 右影像路径 argc[3]: 视差图路径[optional]
- * \param eg. $(SolutionDir)Data\cone\im2.png $(SolutionDir)Data\cone\im6.png $(SolutionDir)Data\cone\disp.bmp
+ * \param argc argc[1]:左影像路径 argc[2]: 右影像路径 argc[3]: 最小视差[可选，默认0] argc[4]: 最大视差[可选，默认64]
+ * \param eg. ..\Data\cone\im2.png ..\Data\cone\im6.png 0 64 
  * \return 
  */
 int main(int argv,char** argc)
 {
     if(argv < 3) {
-        return 0;
+        std::cout << "参数过少，请至少指定左右影像路径！" << std::endl;
+        return -1;
     }
 
     //···············································································//
@@ -51,8 +52,8 @@ int main(int argv,char** argc)
     const sint32 height = static_cast<uint32>(img_right.rows);
 
 	// 左右影像的灰度数据
-	unsigned char* bytes_left = new unsigned char[width*height];
-	unsigned char* bytes_right = new unsigned char[width*height];
+    auto bytes_left = new unsigned char[width*height];
+    auto bytes_right = new unsigned char[width*height];
 	for (int i = 0; i < height;i++) {
 		for (int j = 0; j < width;j++) {
 			bytes_left[i*width + j] = img_left.at<unsigned char>(i, j);
@@ -66,8 +67,8 @@ int main(int argv,char** argc)
     // 聚合路径数
 	sgm_option.num_paths = 8;
 	// 候选视差范围
-    sgm_option.min_disparity = 0;
-    sgm_option.max_disparity = 64;
+    sgm_option.min_disparity = argv < 4 ? 0 : atoi(argc[3]);
+    sgm_option.max_disparity = argv < 5 ? 64 : atoi(argc[4]);
     // 一致性检查
     sgm_option.is_check_lr = true;
     sgm_option.lrcheck_thres = 1.0f;
@@ -105,6 +106,16 @@ int main(int argv,char** argc)
 	//···············································································//
     // 显示视差图
     cv::Mat disp_mat = cv::Mat(height, width, CV_8UC1);
+    float min_disp = width, max_disp = -width;
+	for (sint32 i = 0; i < height; i++) {
+        for (sint32 j = 0; j < width; j++) {
+            const float32 disp = disparity[i * width + j];
+            if (disp != Invalid_Float) {
+                min_disp = std::min(min_disp, disp);
+                max_disp = std::max(max_disp, disp);
+            }
+        }
+    }
     for (sint32 i = 0; i < height; i++) {
         for (sint32 j = 0; j < width; j++) {
             const float32 disp = disparity[i * width + j];
@@ -112,20 +123,22 @@ int main(int argv,char** argc)
                 disp_mat.data[i * width + j] = 0;
             }
             else {
-                disp_mat.data[i * width + j] = static_cast<uchar>(2.5*static_cast<uchar>(disp));
+                disp_mat.data[i * width + j] = static_cast<uchar>((disp - min_disp) / (max_disp - min_disp) * 255);
             }
         }
     }
-
-	if (argv >= 4) {
-		std::string disp_map_path = argc[3];
-		cv::imwrite(disp_map_path, disp_mat);
-	}
 
     cv::imshow("视差图", disp_mat);
 	cv::Mat disp_color;
 	applyColorMap(disp_mat, disp_color, cv::COLORMAP_JET);
 	cv::imshow("视差图-伪彩", disp_color);
+
+	// 保存结果
+    std::string disp_map_path = argc[2]; disp_map_path += ".d.bmp";
+    std::string disp_color_map_path = argc[2]; disp_color_map_path += ".c.bmp";
+    cv::imwrite(disp_map_path, disp_mat);
+    cv::imwrite(disp_color_map_path, disp_color);
+    
 
 	cv::waitKey(0);
 

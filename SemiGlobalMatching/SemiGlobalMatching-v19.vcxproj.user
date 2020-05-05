@@ -5,7 +5,7 @@
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LocalDebuggerCommandArguments>$(SolutionDir)Data\cone\im2.png $(SolutionDir)Data\cone\im6.png $(SolutionDir)Data\cone\disp.bmp</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>D:\CSDN博客\手把手教你SGM编码\代码\SemiGlobalMatching\Data\Wood2\view1.png D:\CSDN博客\手把手教你SGM编码\代码\SemiGlobalMatching\Data\Wood2\view5.png 0 128</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
 </Project>
