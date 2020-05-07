@@ -50,9 +50,10 @@ opencv310
 百度网盘连接：https://pan.baidu.com/s/1_WD-KdPyDBazEIim7NU3jA 
 <br>
 提取码：aab4
-<br>
-解压后放到3rdparty文件夹下
-<br>
+<br><br>
+解压后放将名称为OpenCV的文件夹复制到到3rdparty文件夹下
+<br><br>若运行时提示缺少opencv_310(d).dll，则在OpenCV文件夹里找到对应的dll文件复制到程序exe所在的目录即可（Opencv\dll\opencv_310(d).dll），带d为debug库，不带d为release库。
+<br><br>
 只在实验部分调用opencv库读取和显示图像，也可替换成其他图像库
 
 # 算法引导
