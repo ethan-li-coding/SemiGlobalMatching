@@ -17,20 +17,20 @@
 
 /**
  * \brief 
- * \param argv 3
- * \param argc argc[1]:×óÓ°ÏñÂ·¾¶ argc[2]: ÓÒÓ°ÏñÂ·¾¶ argc[3]: ×îĞ¡ÊÓ²î[¿ÉÑ¡£¬Ä¬ÈÏ0] argc[4]: ×î´óÊÓ²î[¿ÉÑ¡£¬Ä¬ÈÏ64]
+ * \param argv 2~4
+ * \param argc argc[1]:å·¦å½±åƒè·¯å¾„ argc[2]: å³å½±åƒè·¯å¾„ argc[3]: æœ€å°è§†å·®[å¯é€‰ï¼Œé»˜è®¤0] argc[4]: æœ€å¤§è§†å·®[å¯é€‰ï¼Œé»˜è®¤64]
  * \param eg. ..\Data\cone\im2.png ..\Data\cone\im6.png 0 64 
  * \return 
  */
 int main(int argv,char** argc)
 {
     if(argv < 3) {
-        std::cout << "²ÎÊı¹ıÉÙ£¬ÇëÖÁÉÙÖ¸¶¨×óÓÒÓ°ÏñÂ·¾¶£¡" << std::endl;
+        std::cout << "å‚æ•°è¿‡å°‘ï¼Œè¯·è‡³å°‘æŒ‡å®šå·¦å³å½±åƒè·¯å¾„ï¼" << std::endl;
         return -1;
     }
 
-    //¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤//
-    // ¶ÁÈ¡Ó°Ïñ
+    //Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·//
+    // è¯»å–å½±åƒ
     std::string path_left = argc[1];
     std::string path_right = argc[2];
    
@@ -38,20 +38,20 @@ int main(int argv,char** argc)
     cv::Mat img_right = cv::imread(path_right, cv::IMREAD_GRAYSCALE);
 
     if (img_left.data == nullptr || img_right.data == nullptr) {
-        std::cout << "¶ÁÈ¡Ó°ÏñÊ§°Ü£¡" << std::endl;
+        std::cout << "è¯»å–å½±åƒå¤±è´¥ï¼" << std::endl;
         return -1;
     }
     if (img_left.rows != img_right.rows || img_left.cols != img_right.cols) {
-        std::cout << "×óÓÒÓ°Ïñ³ß´ç²»Ò»ÖÂ£¡" << std::endl;
+        std::cout << "å·¦å³å½±åƒå°ºå¯¸ä¸ä¸€è‡´ï¼" << std::endl;
         return -1;
     }
 
 
-    //¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤//
+    //Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·//
     const sint32 width = static_cast<uint32>(img_left.cols);
     const sint32 height = static_cast<uint32>(img_right.rows);
 
-	// ×óÓÒÓ°ÏñµÄ»Ò¶ÈÊı¾İ
+	// å·¦å³å½±åƒçš„ç°åº¦æ•°æ®
     auto bytes_left = new unsigned char[width*height];
     auto bytes_right = new unsigned char[width*height];
 	for (int i = 0; i < height;i++) {
@@ -62,49 +62,49 @@ int main(int argv,char** argc)
 	}
 
 
-    // SGMÆ¥Åä²ÎÊıÉè¼Æ
+    // SGMåŒ¹é…å‚æ•°è®¾è®¡
     SemiGlobalMatching::SGMOption sgm_option;
-    // ¾ÛºÏÂ·¾¶Êı
+    // èšåˆè·¯å¾„æ•°
 	sgm_option.num_paths = 8;
-	// ºòÑ¡ÊÓ²î·¶Î§
+	// å€™é€‰è§†å·®èŒƒå›´
     sgm_option.min_disparity = argv < 4 ? 0 : atoi(argc[3]);
     sgm_option.max_disparity = argv < 5 ? 64 : atoi(argc[4]);
-    // Ò»ÖÂĞÔ¼ì²é
+    // ä¸€è‡´æ€§æ£€æŸ¥
     sgm_option.is_check_lr = true;
     sgm_option.lrcheck_thres = 1.0f;
-    // Î¨Ò»ĞÔÔ¼Êø
+    // å”¯ä¸€æ€§çº¦æŸ
 	sgm_option.is_check_unique = true;
     sgm_option.uniqueness_ratio = 0.99;
-    // ÌŞ³ıĞ¡Á¬Í¨Çø
+    // å‰”é™¤å°è¿é€šåŒº
 	sgm_option.is_remove_speckles = true;
     sgm_option.min_speckle_aera = 30;
-    // ³Í·£ÏîP1¡¢P2
+    // æƒ©ç½šé¡¹P1ã€P2
 	sgm_option.p1 = 10;
     sgm_option.p2_init = 150;
-	// ÊÓ²îÍ¼Ìî³ä
+	// è§†å·®å›¾å¡«å……
 	sgm_option.is_fill_holes = true;
     
-	// ¶¨ÒåSGMÆ¥ÅäÀàÊµÀı
+	// å®šä¹‰SGMåŒ¹é…ç±»å®ä¾‹
     SemiGlobalMatching sgm;
 
-    //¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤//
-    // ³õÊ¼»¯
+    //Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·//
+    // åˆå§‹åŒ–
     if(!sgm.Initialize(width, height, sgm_option)) {
-        std::cout << "SGM³õÊ¼»¯Ê§°Ü£¡" << std::endl;
+        std::cout << "SGMåˆå§‹åŒ–å¤±è´¥ï¼" << std::endl;
         return -2;
     }
 
 
-    //¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤//
-    // Æ¥Åä
+    //Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·//
+    // åŒ¹é…
     auto disparity = new float32[uint32(width * height)]();
     if(!sgm.Match(bytes_left,bytes_right,disparity)) {
-        std::cout << "SGMÆ¥ÅäÊ§°Ü£¡" << std::endl;
+        std::cout << "SGMåŒ¹é…å¤±è´¥ï¼" << std::endl;
         return -2;
     }
 
-	//¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤//
-    // ÏÔÊ¾ÊÓ²îÍ¼
+	//Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·//
+    // æ˜¾ç¤ºè§†å·®å›¾
     cv::Mat disp_mat = cv::Mat(height, width, CV_8UC1);
     float min_disp = width, max_disp = -width;
 	for (sint32 i = 0; i < height; i++) {
@@ -128,12 +128,12 @@ int main(int argv,char** argc)
         }
     }
 
-    cv::imshow("ÊÓ²îÍ¼", disp_mat);
+    cv::imshow("è§†å·®å›¾", disp_mat);
 	cv::Mat disp_color;
 	applyColorMap(disp_mat, disp_color, cv::COLORMAP_JET);
-	cv::imshow("ÊÓ²îÍ¼-Î±²Ê", disp_color);
+	cv::imshow("è§†å·®å›¾-ä¼ªå½©", disp_color);
 
-	// ±£´æ½á¹û
+	// ä¿å­˜ç»“æœ
     std::string disp_map_path = argc[2]; disp_map_path += ".d.bmp";
     std::string disp_color_map_path = argc[2]; disp_color_map_path += ".c.bmp";
     cv::imwrite(disp_map_path, disp_mat);
@@ -142,8 +142,8 @@ int main(int argv,char** argc)
 
 	cv::waitKey(0);
 
-    //¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤//
-    // ÊÍ·ÅÄÚ´æ
+    //Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·Â·//
+    // é‡Šæ”¾å†…å­˜
     delete[] disparity; 
 	disparity = nullptr;
 	delete[] bytes_left;
