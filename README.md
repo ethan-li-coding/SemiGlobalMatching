@@ -29,17 +29,13 @@ SemiGlobalMatching立体匹配算法，学习SGM C++实现的好资源
 <table>
  
 # CSDN博客
-[手把手教你编写SGM双目立体匹配（基于C++，Github同步更新）（一）（框架与类设计）](https://blog.csdn.net/rs_lys/article/details/105065660)
-<br>
-[手把手教你编写SGM双目立体匹配（基于C++，Github同步更新）（二）（代价计算）](https://blog.csdn.net/rs_lys/article/details/105142484)
-<br>
-[手把手教你编写SGM双目立体匹配（基于C++，Github同步更新）（三）（代价聚合）](https://ethanli.blog.csdn.net/article/details/105316274)
-<br>
-[手把手教你编写SGM双目立体匹配（基于C++，Github同步更新）（四）（代价聚合2）](https://blog.csdn.net/rs_lys/article/details/105396761)
-<br>
-[手把手教你编写SGM双目立体匹配（基于C++，Github同步更新）（五）（视差优化）](https://blog.csdn.net/rs_lys/article/details/105715526)
-<br>
-[手把手教你编写SGM双目立体匹配（基于C++，Github同步更新）（六）（视差填充）](https://ethanli.blog.csdn.net/article/details/105897391)
+[【恒叨立码】【码上实战】【立体匹配系列】经典SGM：（1）框架与类设计](https://ethanli.blog.csdn.net/article/details/105065660)<br>
+[【恒叨立码】【码上实战】【立体匹配系列】经典SGM：（2）代价计算](https://ethanli.blog.csdn.net/article/details/105142484)<br>
+[【恒叨立码】【码上实战】【立体匹配系列】经典SGM：（3）代价聚合](https://ethanli.blog.csdn.net/article/details/105316274)<br>
+[【恒叨立码】【码上实战】【立体匹配系列】经典SGM：（4）代价聚合2](https://ethanli.blog.csdn.net/article/details/105396761)<br>
+[【恒叨立码】【码上实战】【立体匹配系列】经典SGM：（5）视差优化](https://blog.csdn.net/rs_lys/article/details/105715526)<br>
+[【恒叨立码】【码上实战】【立体匹配系列】经典SGM：（6）视差填充](https://ethanli.blog.csdn.net/article/details/105897391)<br>
+[【恒叨立码】【码上实战】【立体匹配系列】经典SGM：（7）弱纹理优化](https://ethanli.blog.csdn.net/article/details/106168040)<br>
 
 # 环境
 windows10 / visual studio 2015&2019
