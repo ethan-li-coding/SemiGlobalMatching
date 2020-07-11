@@ -103,5 +103,15 @@ namespace sgm_util
 	 */
 	void MedianFilter(const float32* in, float32* out, const sint32& width, const sint32& height, const sint32 wnd_size);
 
-	void RemoveSpeckles(float32* disparity_map, const sint32& width, const sint32& height, const sint32& diff_insame,const uint32& min_speckle_aera, const float& invalid_val);
+
+	/**
+	 * \brief 剔除小连通区
+	 * \param disparity_map		输入，视差图 
+	 * \param width				输入，宽度
+	 * \param height			输入，高度
+	 * \param diff_insame		输入，同一连通区内的局部像素差异
+	 * \param min_speckle_aera	输入，最小连通区面积
+	 * \param invalid_val		输入，无效值
+	 */
+	void RemoveSpeckles(float32* disparity_map, const sint32& width, const sint32& height, const sint32& diff_insame,const uint32& min_speckle_aera, const float32& invalid_val);
 }

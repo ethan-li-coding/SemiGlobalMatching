@@ -99,7 +99,7 @@ private:
 	/** \brief 内存释放	 */
 	void Release();
 
-	private:
+private:
 	/** \brief SGM参数	 */
 	SGMOption option_;
 

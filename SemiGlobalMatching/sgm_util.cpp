@@ -483,7 +483,6 @@ void sgm_util::MedianFilter(const float32* in, float32* out, const sint32& width
 
 			// 排序
 			std::sort(wnd_data.begin(), wnd_data.end());
-
 			// 取中值
 			out[i * width + j] = wnd_data[wnd_data.size() / 2];
 		}
@@ -491,7 +490,7 @@ void sgm_util::MedianFilter(const float32* in, float32* out, const sint32& width
 }
 
 void sgm_util::RemoveSpeckles(float32* disparity_map, const sint32& width, const sint32& height,
-	const sint32& diff_insame, const uint32& min_speckle_aera, const float& invalid_val)
+	const sint32& diff_insame, const uint32& min_speckle_aera, const float32& invalid_val)
 {
 	assert(width > 0 && height > 0);
 	if (width < 0 || height < 0) {
@@ -506,7 +505,6 @@ void sgm_util::RemoveSpeckles(float32* disparity_map, const sint32& width, const
 				// 跳过已访问的像素及无效像素
 				continue;
 			}
-
 			// 广度优先遍历，区域跟踪
 			// 把连通域面积小于阈值的区域视差全设为无效值
 			std::vector<std::pair<sint32, sint32>> vec;
@@ -531,7 +529,9 @@ void sgm_util::RemoveSpeckles(float32* disparity_map, const sint32& width, const
 							int rowr = row + r;
 							int colc = col + c;
 							if (rowr >= 0 && rowr < height && colc >= 0 && colc < width) {
-								if(!visited[rowr * width + colc] && abs(disparity_map[rowr * width + colc] - disp_base) <= diff_insame) {
+								if(!visited[rowr * width + colc] &&
+									(disparity_map[i * width + j] != invalid_val) &&
+									abs(disparity_map[rowr * width + colc] - disp_base) <= diff_insame) {
 									vec.emplace_back(rowr, colc);
 									visited[rowr * width + colc] = true;
 								}
@@ -546,7 +546,6 @@ void sgm_util::RemoveSpeckles(float32* disparity_map, const sint32& width, const
 			if(vec.size() < min_speckle_aera) {
 				for(auto& pix:vec) {
 					disparity_map[pix.first * width + pix.second] = invalid_val;
-					
 				}
 			}
 		}
