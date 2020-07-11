@@ -63,7 +63,15 @@ SGM步骤图
 <img src="https://github.com/ethan-li-coding/SemiGlobalMatching/blob/master/doc/exp/SGM%E5%8C%B9%E9%85%8D%E7%B1%BB%E7%BB%93%E6%9E%84.png" width=50%>
 </div>
 
-# 实验
+## 备注
+<b>算法优点</b>：效果好，效率高，且可高度并行
+<br><b>算法缺点</b>：效果非SOTA、内存占用高（可优化）、对弱纹理、重复纹理支持不太好
+
+## 论文
+1. Heiko Hirschmüller. Hirschmüller, H: <b>Stereo processing by semiglobal matching and mutual information</b>. IEEE PAMI 30(2), 328-341[J]. IEEE Transactions on Pattern Analysis and Machine Intelligence, 2008, 30(2):328-341.
+2. Humenberger M , Engelke T , Kubinger W . <b>A census-based stereo vision algorithm using modified Semi-Global Matching and plane fitting to improve matching quality</b>[C]// IEEE Computer Society Conference on Computer Vision & Pattern Recognition-workshops. IEEE, 2010.
+
+## 实验
 实验(1)：只做从左到右聚合：
 <div align=center>
 <img src="https://github.com/ethan-li-coding/SemiGlobalMatching/blob/master/doc/exp/%E8%81%9A%E5%90%88%EF%BC%88%E5%B7%A6-%E5%8F%B3%EF%BC%89.png" width=70%>
