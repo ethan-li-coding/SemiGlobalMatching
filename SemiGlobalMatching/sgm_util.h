@@ -1,5 +1,6 @@
 /* -*-c++-*- SemiGlobalMatching - Copyright (C) 2020.
 * Author	: Ethan Li <ethan.li.whu@gmail.com>
+* https://github.com/ethan-li-coding/SemiGlobalMatching
 * Describe	: implement of sgm_util
 */
 
@@ -26,7 +27,7 @@ namespace sgm_util
 	void census_transform_9x7(const uint8* source, uint64* census, const sint32& width, const sint32& height);
 	// Hamming¾àÀë
 	uint8 Hamming32(const uint32& x, const uint32& y);
-
+	uint8 Hamming64(const uint64& x, const uint64& y);
 
 	/**
 	 * \brief ×óÓÒÂ·¾¶¾ÛºÏ ¡ú ¡û

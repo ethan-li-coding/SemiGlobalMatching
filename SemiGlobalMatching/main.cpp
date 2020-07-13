@@ -69,6 +69,8 @@ int main(int argv, char** argc)
     // 候选视差范围
     sgm_option.min_disparity = argv < 4 ? 0 : atoi(argc[3]);
     sgm_option.max_disparity = argv < 5 ? 64 : atoi(argc[4]);
+    // census窗口类型
+    sgm_option.census_size = SemiGlobalMatching::Census5x5;
     // 一致性检查
     sgm_option.is_check_lr = true;
     sgm_option.lrcheck_thres = 1.0f;

@@ -1,3 +1,9 @@
+/* -*-c++-*- SemiGlobalMatching - Copyright (C) 2020.
+* Author	: Ethan Li <ethan.li.whu@gmail.com>
+* https://github.com/ethan-li-coding/SemiGlobalMatching
+* Describe	: header of sgm_types
+*/
+
 #pragma once
 
 #include <cstdint>

@@ -149,6 +149,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="SegmentOptimize.h" />
     <ClInclude Include="SemiGlobalMatching.h" />
     <ClInclude Include="sgm_types.h" />
     <ClInclude Include="sgm_util.h" />
@@ -157,6 +158,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="SegmentOptimize.cpp" />
     <ClCompile Include="SemiGlobalMatching.cpp" />
     <ClCompile Include="sgm_util.cpp" />
     <ClCompile Include="stdafx.cpp">

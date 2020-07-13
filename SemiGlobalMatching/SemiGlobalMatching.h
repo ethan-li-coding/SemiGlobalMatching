@@ -1,5 +1,6 @@
 /* -*-c++-*- SemiGlobalMatching - Copyright (C) 2020.
 * Author	: Ethan Li <ethan.li.whu@gmail.com>
+* https://github.com/ethan-li-coding/SemiGlobalMatching
 * Describe	: header of semi-global matching class
 */
 
@@ -17,12 +18,21 @@ public:
 	SemiGlobalMatching();
 	~SemiGlobalMatching();
 
+
+	/** \brief Census窗口尺寸类型 */
+	enum CensusSize {
+		Census5x5 = 0,
+		Census9x7
+	};
+
 	/** \brief SGM参数结构体 */
 	struct SGMOption {
 		uint8	num_paths;			// 聚合路径数 4 and 8
 		sint32  min_disparity;		// 最小视差
 		sint32	max_disparity;		// 最大视差
-		
+
+		CensusSize census_size;		// census窗口尺寸
+
 		bool	is_check_unique;	// 是否检查唯一性
 		float32	uniqueness_ratio;	// 唯一性约束阈值 （最小代价-次最小代价)/最小代价 > 阈值 为有效像素
 
@@ -39,14 +49,12 @@ public:
 		sint32  p1;				// 惩罚项参数P1
 		sint32  p2_init;		// 惩罚项参数P2
 
-		SGMOption(): num_paths(8), min_disparity(0), max_disparity(640),
+		SGMOption(): num_paths(8), min_disparity(0), max_disparity(640), census_size(Census5x5),
 		             is_check_unique(true), uniqueness_ratio(0.95f),
 		             is_check_lr(true), lrcheck_thres(1.0f),
 		             is_remove_speckles(true), min_speckle_aera(20),
-					 is_fill_holes(true),
-		             p1(10), p2_init(150)
-		{
-		}
+		             is_fill_holes(true),
+		             p1(10), p2_init(150) { }
 	};
 public:
 	/**
@@ -116,10 +124,10 @@ private:
 	const uint8* img_right_;
 	
 	/** \brief 左影像census值	*/
-	uint32* census_left_;
+	void* census_left_;
 	
 	/** \brief 右影像census值	*/
-	uint32* census_right_;
+	void* census_right_;
 	
 	/** \brief 初始匹配代价	*/
 	uint8* cost_init_;

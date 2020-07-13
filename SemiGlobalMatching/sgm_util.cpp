@@ -1,5 +1,6 @@
 /* -*-c++-*- SemiGlobalMatching - Copyright (C) 2020.
 * Author	: Ethan Li <ethan.li.whu@gmail.com>
+* https://github.com/ethan-li-coding/SemiGlobalMatching
 * Describe	: implement of sgm_util
 */
 
@@ -13,7 +14,7 @@
 void sgm_util::census_transform_5x5(const uint8* source, uint32* census, const sint32& width,
 	const sint32& height)
 {
-	if (source == nullptr || census == nullptr || width <= 5u || height <= 5u) {
+	if (source == nullptr || census == nullptr || width <= 5 || height <= 5) {
 		return;
 	}
 
@@ -44,6 +45,33 @@ void sgm_util::census_transform_5x5(const uint8* source, uint32* census, const s
 
 void sgm_util::census_transform_9x7(const uint8* source, uint64* census, const sint32& width, const sint32& height)
 {
+	if (source == nullptr || census == nullptr || width <= 9 || height <= 7) {
+		return;
+	}
+
+	// 逐像素计算census值
+	for (sint32 i = 4; i < height - 4; i++) {
+		for (sint32 j = 3; j < width - 3; j++) {
+
+			// 中心像素值
+			const uint8 gray_center = source[i * width + j];
+
+			// 遍历大小为5x5的窗口内邻域像素，逐一比较像素值与中心像素值的的大小，计算census值
+			uint64 census_val = 0u;
+			for (sint32 r = -4; r <= 4; r++) {
+				for (sint32 c = -3; c <= 3; c++) {
+					census_val <<= 1;
+					const uint8 gray = source[(i + r) * width + j + c];
+					if (gray < gray_center) {
+						census_val += 1;
+					}
+				}
+			}
+
+			// 中心像素的census值
+			census[i * width + j] = census_val;
+		}
+	}
 }
 
 uint8 sgm_util::Hamming32(const uint32& x, const uint32& y)
@@ -58,6 +86,20 @@ uint8 sgm_util::Hamming32(const uint32& x, const uint32& y)
 
 	return static_cast<uint8>(dist);
 }
+
+uint8 sgm_util::Hamming64(const uint64& x, const uint64& y)
+{
+	uint64 dist = 0, val = x ^ y;
+
+	// Count the number of set bits
+	while (val) {
+		++dist;
+		val &= val - 1;
+	}
+
+	return static_cast<uint8>(dist);
+}
+
 
 void sgm_util::CostAggregateLeftRight(const uint8* img_data, const sint32& width, const sint32& height, const sint32& min_disparity, const sint32& max_disparity,
 	const sint32& p1, const sint32& p2_init, const uint8* cost_init, uint8* cost_aggr, bool is_forward)
