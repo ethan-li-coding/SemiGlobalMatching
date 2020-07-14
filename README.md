@@ -5,26 +5,26 @@ SemiGlobalMatching立体匹配算法，学习SGM C++实现的好资源
     <tr>
         <td ><center><img src="https://github.com/ethan-li-coding/SemiGlobalMatching/blob/master/Data/cone/im2.png"></center></td>
         <td ><center><img src="https://github.com/ethan-li-coding/SemiGlobalMatching/blob/master/Data/cone/im6.png"></center></td>
-        <td ><center><img src="https://github.com/ethan-li-coding/SemiGlobalMatching/blob/master/doc/exp/res/cone-d.bmp"></center></td>
-        <td ><center><img src="https://github.com/ethan-li-coding/SemiGlobalMatching/blob/master/doc/exp/res/cone-c.bmp"></center></td>
+        <td ><center><img src="https://github.com/ethan-li-coding/SemiGlobalMatching/blob/master/doc/exp/res/cone-d.png"></center></td>
+        <td ><center><img src="https://github.com/ethan-li-coding/SemiGlobalMatching/blob/master/doc/exp/res/cone-c.png"></center></td>
     </tr>
     <tr>
         <td ><center><img src="https://github.com/ethan-li-coding/SemiGlobalMatching/blob/master/Data/Reindeer/view1.png"></center></td>
         <td ><center><img src="https://github.com/ethan-li-coding/SemiGlobalMatching/blob/master/Data/Reindeer/view5.png"></center></td>
-        <td ><center><img src="https://github.com/ethan-li-coding/SemiGlobalMatching/blob/master/doc/exp/res/reindeer-d.bmp"></center></td>
-        <td ><center><img src="https://github.com/ethan-li-coding/SemiGlobalMatching/blob/master/doc/exp/res/reindeer-c.bmp"></center></td>
+        <td ><center><img src="https://github.com/ethan-li-coding/SemiGlobalMatching/blob/master/doc/exp/res/reindeer-d.png"></center></td>
+        <td ><center><img src="https://github.com/ethan-li-coding/SemiGlobalMatching/blob/master/doc/exp/res/reindeer-c.png"></center></td>
     </tr>
     <tr>
         <td ><center><img src="https://github.com/ethan-li-coding/SemiGlobalMatching/blob/master/Data/Cloth3/view1.png"></center></td>
         <td ><center><img src="https://github.com/ethan-li-coding/SemiGlobalMatching/blob/master/Data/Cloth3/view5.png"></center></td>
-        <td ><center><img src="https://github.com/ethan-li-coding/SemiGlobalMatching/blob/master/doc/exp/res/cloth-d.bmp"></center></td>
-        <td ><center><img src="https://github.com/ethan-li-coding/SemiGlobalMatching/blob/master/doc/exp/res/cloth-c.bmp"></center></td>
+        <td ><center><img src="https://github.com/ethan-li-coding/SemiGlobalMatching/blob/master/doc/exp/res/cloth-d.png"></center></td>
+        <td ><center><img src="https://github.com/ethan-li-coding/SemiGlobalMatching/blob/master/doc/exp/res/cloth-c.png"></center></td>
     </tr>
     <tr>
         <td ><center><img src="https://github.com/ethan-li-coding/SemiGlobalMatching/blob/master/Data/Wood2/view1.png"></center></td>
         <td ><center><img src="https://github.com/ethan-li-coding/SemiGlobalMatching/blob/master/Data/Wood2/view5.png"></center></td>
-        <td ><center><img src="https://github.com/ethan-li-coding/SemiGlobalMatching/blob/master/doc/exp/res/wood2-d.bmp"></center></td>
-        <td ><center><img src="https://github.com/ethan-li-coding/SemiGlobalMatching/blob/master/doc/exp/res/wood2-c.bmp"></center></td>
+        <td ><center><img src="https://github.com/ethan-li-coding/SemiGlobalMatching/blob/master/doc/exp/res/wood2-d.png"></center></td>
+        <td ><center><img src="https://github.com/ethan-li-coding/SemiGlobalMatching/blob/master/doc/exp/res/wood2-c.png"></center></td>
     </tr>
 <table>
  

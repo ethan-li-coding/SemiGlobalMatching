@@ -136,8 +136,8 @@ int main(int argv, char** argc)
     cv::imshow("视差图-伪彩", disp_color);
 
     // 保存结果
-    std::string disp_map_path = argc[2]; disp_map_path += ".d.bmp";
-    std::string disp_color_map_path = argc[2]; disp_color_map_path += ".c.bmp";
+    std::string disp_map_path = argc[2]; disp_map_path += ".d.png";
+    std::string disp_color_map_path = argc[2]; disp_color_map_path += ".c.png";
     cv::imwrite(disp_map_path, disp_mat);
     cv::imwrite(disp_color_map_path, disp_color);
 
