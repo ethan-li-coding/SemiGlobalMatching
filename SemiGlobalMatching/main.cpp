@@ -5,6 +5,8 @@
 
 #include "stdafx.h"
 #include "SemiGlobalMatching.h"
+#include <chrono>
+using namespace std::chrono;
 
 // opencv library
 #include <opencv2/opencv.hpp>
@@ -91,22 +93,33 @@ int main(int argv, char** argc)
 
     //¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤//
     // ³õÊ¼»¯
+	printf("SGM Initializing...");
+    auto start = std::chrono::steady_clock::now();
     if (!sgm.Initialize(width, height, sgm_option)) {
         std::cout << "SGM³õÊ¼»¯Ê§°Ü£¡" << std::endl;
         return -2;
     }
-
+    auto end = std::chrono::steady_clock::now();
+    auto tt = duration_cast<std::chrono::milliseconds>(end - start);
+    printf("Done! Timing : %lf s\n", tt.count() / 1000.0);
 
     //¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤//
     // Æ¥Åä
+	printf("SGM Matching...");
+    start = std::chrono::steady_clock::now();
+    // disparityÊý×é±£´æ×ÓÏñËØµÄÊÓ²î½á¹û
     auto disparity = new float32[uint32(width * height)]();
     if (!sgm.Match(bytes_left, bytes_right, disparity)) {
         std::cout << "SGMÆ¥ÅäÊ§°Ü£¡" << std::endl;
         return -2;
     }
+    end = std::chrono::steady_clock::now();
+    tt = duration_cast<std::chrono::milliseconds>(end - start);
+    printf("Done! Timing : %lf s\n", tt.count() / 1000.0);
 
     //¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤//
-    // ÏÔÊ¾ÊÓ²îÍ¼
+	// ÏÔÊ¾ÊÓ²îÍ¼
+    // ×¢Òâ£¬¼ÆËãµãÔÆ²»ÄÜÓÃdisp_matµÄÊý¾Ý£¬ËüÊÇÓÃÀ´ÏÔÊ¾ºÍ±£´æ½á¹ûÓÃµÄ¡£¼ÆËãµãÔÆÒªÓÃÉÏÃæµÄdisparityÊý×éÀïµÄÊý¾Ý£¬ÊÇ×ÓÏñËØ¸¡µãÊý
     cv::Mat disp_mat = cv::Mat(height, width, CV_8UC1);
     float min_disp = width, max_disp = -width;
     for (sint32 i = 0; i < height; i++) {
