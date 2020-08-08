@@ -49,7 +49,7 @@ public:
 		sint32  p1;				// 惩罚项参数P1
 		sint32  p2_init;		// 惩罚项参数P2
 
-		SGMOption(): num_paths(8), min_disparity(0), max_disparity(640), census_size(Census5x5),
+		SGMOption(): num_paths(8), min_disparity(0), max_disparity(64), census_size(Census5x5),
 		             is_check_unique(true), uniqueness_ratio(0.95f),
 		             is_check_lr(true), lrcheck_thres(1.0f),
 		             is_remove_speckles(true), min_speckle_aera(20),
