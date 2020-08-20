@@ -86,6 +86,7 @@ int main(int argv, char** argc)
     sgm_option.p1 = 10;
     sgm_option.p2_init = 150;
     // 视差图填充
+    // 视差图填充的结果并不可靠，若工程，不建议填充，若科研，则可填充
     sgm_option.is_fill_holes = true;
 
     // 定义SGM匹配类实例
