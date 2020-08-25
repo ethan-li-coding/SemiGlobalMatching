@@ -1,5 +1,5 @@
 # SemiGlobalMatching
-SemiGlobalMatching立体匹配算法，学习SGM C++实现的好资源
+SemiGlobalMatching立体匹配算法，学习SGM实现的好资源，欢迎star!
 
 <table>
     <tr>
