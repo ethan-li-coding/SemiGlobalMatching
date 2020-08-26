@@ -64,6 +64,8 @@ int main(int argv, char** argc)
         }
     }
 
+    printf("Loading Views...Done!\n");
+
     // SGMÆ¥Åä²ÎÊýÉè¼Æ
     SemiGlobalMatching::SGMOption sgm_option;
     // ¾ÛºÏÂ·¾¶Êý
@@ -87,14 +89,16 @@ int main(int argv, char** argc)
     sgm_option.p2_init = 150;
     // ÊÓ²îÍ¼Ìî³ä
     // ÊÓ²îÍ¼Ìî³äµÄ½á¹û²¢²»¿É¿¿£¬Èô¹¤³Ì£¬²»½¨ÒéÌî³ä£¬Èô¿ÆÑÐ£¬Ôò¿ÉÌî³ä
-    sgm_option.is_fill_holes = true;
+    sgm_option.is_fill_holes = false;
+
+    printf("w = %d, h = %d, d = [%d,%d]\n\n", width, height, sgm_option.min_disparity, sgm_option.max_disparity);
 
     // ¶¨ÒåSGMÆ¥ÅäÀàÊµÀý
     SemiGlobalMatching sgm;
 
     //¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤//
     // ³õÊ¼»¯
-	printf("SGM Initializing...");
+	printf("SGM Initializing...\n");
     auto start = std::chrono::steady_clock::now();
     if (!sgm.Initialize(width, height, sgm_option)) {
         std::cout << "SGM³õÊ¼»¯Ê§°Ü£¡" << std::endl;
@@ -102,11 +106,11 @@ int main(int argv, char** argc)
     }
     auto end = std::chrono::steady_clock::now();
     auto tt = duration_cast<std::chrono::milliseconds>(end - start);
-    printf("Done! Timing : %lf s\n", tt.count() / 1000.0);
+    printf("SGM Initializing Done! Timing : %lf s\n\n", tt.count() / 1000.0);
 
     //¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤//
     // Æ¥Åä
-	printf("SGM Matching...");
+	printf("SGM Matching...\n");
     start = std::chrono::steady_clock::now();
     // disparityÊý×é±£´æ×ÓÏñËØµÄÊÓ²î½á¹û
     auto disparity = new float32[uint32(width * height)]();
@@ -116,7 +120,7 @@ int main(int argv, char** argc)
     }
     end = std::chrono::steady_clock::now();
     tt = duration_cast<std::chrono::milliseconds>(end - start);
-    printf("Done! Timing : %lf s\n", tt.count() / 1000.0);
+    printf("\nSGM Matching...Done! Timing :   %lf s\n", tt.count() / 1000.0);
 
     //¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤//
 	// ÏÔÊ¾ÊÓ²îÍ¼
