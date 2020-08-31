@@ -80,9 +80,9 @@ SGM步骤图
         <td ><center><img src="https://github.com/ethan-li-coding/SemiGlobalMatching/blob/master/doc/exp/Fill.png"></center></td>
     </tr>
 </table>
+<b>上行</b>：左视图、右视图、初始代价结果、聚合代价结果<br>
+<b>下行</b>：一致性检查、唯一性约束+去小连通区、中值滤波、视差填充<br>
 
-<center>Row 1(left to right): Left View, Right View, Initial Cost, Cost Aggregate</center><br>
-<center>Row 2(left to right): Consistency Check, Uniqueness&Remove Peaks, Median Filter, Fill.png</center><br>                                                                                                                                      
 ## Github图片不显示的解决办法
 修改hosts
 
