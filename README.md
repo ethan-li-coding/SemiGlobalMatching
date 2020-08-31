@@ -65,48 +65,22 @@ SGM步骤图
 1. Heiko Hirschmüller. Hirschmüller, H: <b>Stereo processing by semiglobal matching and mutual information</b>. IEEE PAMI 30(2), 328-341[J]. IEEE Transactions on Pattern Analysis and Machine Intelligence, 2008, 30(2):328-341.
 2. Humenberger M , Engelke T , Kubinger W . <b>A census-based stereo vision algorithm using modified Semi-Global Matching and plane fitting to improve matching quality</b>[C]// IEEE Computer Society Conference on Computer Vision & Pattern Recognition-workshops. IEEE, 2010.
 
-## 实验
-实验(1)：只做从左到右聚合：
-<div align=center>
-<img src="https://github.com/ethan-li-coding/SemiGlobalMatching/blob/master/doc/exp/%E8%81%9A%E5%90%88%EF%BC%88%E5%B7%A6-%E5%8F%B3%EF%BC%89.png" width=70%>
-</div>
-<br/>实验(2)：只做从右到左聚合：
-<div align=center>
-<img src="https://github.com/ethan-li-coding/SemiGlobalMatching/blob/master/doc/exp/%E8%81%9A%E5%90%88%EF%BC%88%E5%8F%B3-%E5%B7%A6%EF%BC%89.png" width=70%>
-</div>
-<br/>实验(3)：只做从上到下聚合：
-<div align=center>
-<img src="https://github.com/ethan-li-coding/SemiGlobalMatching/blob/master/doc/exp/%E8%81%9A%E5%90%88%EF%BC%88%E4%B8%8A-%E4%B8%8B%EF%BC%89.png" width=70%>
-</div>
-<br/>实验(4)：只做从下到上聚合：
-<div align=center>
-<img src="https://github.com/ethan-li-coding/SemiGlobalMatching/blob/master/doc/exp/%E8%81%9A%E5%90%88%EF%BC%88%E4%B8%8B-%E4%B8%8A%EF%BC%89.png" width=70%>
-</div>
-<br/>实验(5)：从左上到右下聚合：
-<div align=center>
-<img src="https://github.com/ethan-li-coding/SemiGlobalMatching/blob/master/doc/exp/%E8%81%9A%E5%90%88%EF%BC%88%E5%B7%A6%E4%B8%8A-%E5%8F%B3%E4%B8%8B%EF%BC%89.png" width=70%>
-</div>
-<br/>实验(6)：从右下到左上聚合：
-<div align=center>
-<img src="https://github.com/ethan-li-coding/SemiGlobalMatching/blob/master/doc/exp/%E8%81%9A%E5%90%88%EF%BC%88%E5%8F%B3%E4%B8%8B-%E5%B7%A6%E4%B8%8A%EF%BC%89.png" width=70%>
-</div>
-<br/>实验(7)：从右上到左下聚合：
-<div align=center>
-<img src="https://github.com/ethan-li-coding/SemiGlobalMatching/blob/master/doc/exp/%E8%81%9A%E5%90%88%EF%BC%88%E5%8F%B3%E4%B8%8A-%E5%B7%A6%E4%B8%8B%EF%BC%89.png" width=70%>
-</div>
-<br/>实验(8)：从左下到右上聚合：
-<div align=center>
-<img src="https://github.com/ethan-li-coding/SemiGlobalMatching/blob/master/doc/exp/%E8%81%9A%E5%90%88%EF%BC%88%E5%B7%A6%E4%B8%8B-%E5%8F%B3%E4%B8%8A%EF%BC%89.png" width=70%>
-</div>
-<br/>实验(9)：4-路径全聚合：
-<div align=center>
-<img src="https://github.com/ethan-li-coding/SemiGlobalMatching/blob/master/doc/exp/%E8%81%9A%E5%90%88%EF%BC%884%E8%B7%AF%E5%BE%84%EF%BC%89.png" width=70%>
-</div>
-<br/>实验(10)：8-路径全聚合：
-<div align=center>
-<img src="https://github.com/ethan-li-coding/SemiGlobalMatching/blob/master/doc/exp/%E8%81%9A%E5%90%88%EF%BC%888%E8%B7%AF%E5%BE%84%EF%BC%89.png" width=70%>
-</div>
+## 实验图
 
+<table>
+    <tr>
+        <td ><center><img src="https://github.com/ethan-li-coding/SemiGlobalMatching/blob/master/Data/cone/im2.png">Left View</center></td>
+        <td ><center><img src="https://github.com/ethan-li-coding/SemiGlobalMatching/blob/master/Data/cone/im6.png">Right View</center></td>
+        <td ><center><img src="https://github.com/ethan-li-coding/SemiGlobalMatching/blob/master/doc/exp/Init.png">Initial Cost</center></td>
+        <td ><center><img src="https://github.com/ethan-li-coding/SemiGlobalMatching/blob/master/doc/exp/CA.png">Cost Aggregate</center></td>
+    </tr>
+    <tr>
+        <td ><center><img src="https://github.com/ethan-li-coding/SemiGlobalMatching/blob/master/doc/exp/LRCheck.png">Consistency Check</center></td>
+        <td ><center><img src="https://github.com/ethan-li-coding/SemiGlobalMatching/blob/master/doc/exp/LRCheck%2BRemovePeaks.png">Uniqueness&Remove Peaks</center></td>
+        <td ><center><img src="https://github.com/ethan-li-coding/SemiGlobalMatching/blob/master/doc/exp/MedianFilter.png">Median Filter</center></td>
+        <td ><center><img src="https://github.com/ethan-li-coding/SemiGlobalMatching/blob/master/doc/exp/Fill.png">Fill</center></td>
+    </tr>
+<table>
                                                                                                                                          
 ## Github图片不显示的解决办法
 修改hosts
