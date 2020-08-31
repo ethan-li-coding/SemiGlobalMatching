@@ -20,7 +20,7 @@ SemiGlobalMatching立体匹配算法，学习SGM实现的好资源，欢迎star!
         <td ><center><img src="https://github.com/ethan-li-coding/SemiGlobalMatching/blob/master/doc/exp/res/cloth-d.png"></center></td>
         <td ><center><img src="https://github.com/ethan-li-coding/SemiGlobalMatching/blob/master/doc/exp/res/cloth-c.png"></center></td>
     </tr>
-<table>
+</table>
  
 # CSDN博客
 [【恒叨立码】【码上实战】【立体匹配系列】经典SGM：（1）框架与类设计](https://ethanli.blog.csdn.net/article/details/105065660)<br>
@@ -52,7 +52,7 @@ SGM步骤图
 <div align=center>
 <img src="https://github.com/ethan-li-coding/SemiGlobalMatching/blob/master/doc/exp/SGM%E6%AD%A5%E9%AA%A4%E5%9B%BE.png" width=70%>
 </div>
-<br/>SGM类设计图<br/>
+<br>SGM类设计图<br/>
 <div align=center>
 <img src="https://github.com/ethan-li-coding/SemiGlobalMatching/blob/master/doc/exp/SGM%E5%8C%B9%E9%85%8D%E7%B1%BB%E7%BB%93%E6%9E%84.png" width=50%>
 </div>
@@ -66,22 +66,23 @@ SGM步骤图
 2. Humenberger M , Engelke T , Kubinger W . <b>A census-based stereo vision algorithm using modified Semi-Global Matching and plane fitting to improve matching quality</b>[C]// IEEE Computer Society Conference on Computer Vision & Pattern Recognition-workshops. IEEE, 2010.
 
 ## 实验图
+<table>
+    <tr>
+        <td ><center><img src="https://github.com/ethan-li-coding/SemiGlobalMatching/blob/master/Data/cone/im2.png"></center></td>
+        <td ><center><img src="https://github.com/ethan-li-coding/SemiGlobalMatching/blob/master/Data/cone/im6.png"></center></td>
+        <td ><center><img src="https://github.com/ethan-li-coding/SemiGlobalMatching/blob/master/doc/exp/Init.png"></center></td>
+        <td ><center><img src="https://github.com/ethan-li-coding/SemiGlobalMatching/blob/master/doc/exp/CA.png"></center></td>
+    </tr>
+    <tr>
+        <td ><center><img src="https://github.com/ethan-li-coding/SemiGlobalMatching/blob/master/doc/exp/LRCheck.png"></center></td>
+        <td ><center><img src="https://github.com/ethan-li-coding/SemiGlobalMatching/blob/master/doc/exp/LRCheck%2BRemovePeaks.png"></center></td>
+        <td ><center><img src="https://github.com/ethan-li-coding/SemiGlobalMatching/blob/master/doc/exp/MedianFilter.png"></center></td>
+        <td ><center><img src="https://github.com/ethan-li-coding/SemiGlobalMatching/blob/master/doc/exp/Fill.png"></center></td>
+    </tr>
+</table>
 
-<table>
-    <tr>
-        <td ><center><img src="https://github.com/ethan-li-coding/SemiGlobalMatching/blob/master/Data/cone/im2.png">Left View</center></td>
-        <td ><center><img src="https://github.com/ethan-li-coding/SemiGlobalMatching/blob/master/Data/cone/im6.png">Right View</center></td>
-        <td ><center><img src="https://github.com/ethan-li-coding/SemiGlobalMatching/blob/master/doc/exp/Init.png">Initial Cost</center></td>
-        <td ><center><img src="https://github.com/ethan-li-coding/SemiGlobalMatching/blob/master/doc/exp/CA.png">Cost Aggregate</center></td>
-    </tr>
-    <tr>
-        <td ><center><img src="https://github.com/ethan-li-coding/SemiGlobalMatching/blob/master/doc/exp/LRCheck.png">Consistency Check</center></td>
-        <td ><center><img src="https://github.com/ethan-li-coding/SemiGlobalMatching/blob/master/doc/exp/LRCheck%2BRemovePeaks.png">Uniqueness&Remove Peaks</center></td>
-        <td ><center><img src="https://github.com/ethan-li-coding/SemiGlobalMatching/blob/master/doc/exp/MedianFilter.png">Median Filter</center></td>
-        <td ><center><img src="https://github.com/ethan-li-coding/SemiGlobalMatching/blob/master/doc/exp/Fill.png">Fill</center></td>
-    </tr>
-<table>
-                                                                                                                                         
+<center>Row 1(left to right): Left View, Right View, Initial Cost, Cost Aggregate</center><br>
+<center>Row 2(left to right): Consistency Check, Uniqueness&Remove Peaks, Median Filter, Fill.png</center><br>                                                                                                                                      
 ## Github图片不显示的解决办法
 修改hosts
 
