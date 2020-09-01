@@ -1,5 +1,5 @@
 /* -*-c++-*- SemiGlobalMatching - Copyright (C) 2020.
-* Author	: Ethan Li <ethan.li.whu@gmail.com>
+* Author	: Yingsong Li(Ethan Li) <ethan.li.whu@gmail.com>
 * Describe	: main
 */
 
