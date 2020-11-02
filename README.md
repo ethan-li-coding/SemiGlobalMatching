@@ -90,6 +90,8 @@ C:\Windows\System32\drivers\etc\hosts
 
 在文件末尾添加：
 
+
+```cpp
 # GitHub Start
 140.82.112.4 github.com
 140.82.114.4 gist.github.com
