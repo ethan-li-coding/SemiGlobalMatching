@@ -7,9 +7,12 @@
 
 #include "targetver.h"
 
+#include <cmath>
 #include <stdio.h>
+#include <cstring>
+
+#ifdef WIN32
 #include <tchar.h>
-
-
+#endif
 
 // TODO: reference additional headers your program requires here
