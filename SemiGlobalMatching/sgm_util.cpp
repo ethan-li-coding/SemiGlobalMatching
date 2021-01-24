@@ -572,7 +572,7 @@ void sgm_util::RemoveSpeckles(float32* disparity_map, const sint32& width, const
 							int colc = col + c;
 							if (rowr >= 0 && rowr < height && colc >= 0 && colc < width) {
 								if(!visited[rowr * width + colc] &&
-									(disparity_map[i * width + j] != invalid_val) &&
+									(disparity_map[rowr * width + colc] != invalid_val) &&
 									abs(disparity_map[rowr * width + colc] - disp_base) <= diff_insame) {
 									vec.emplace_back(rowr, colc);
 									visited[rowr * width + colc] = true;
