@@ -98,7 +98,7 @@ int main(int argv, char** argc)
 
     //¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤//
     // ³õÊ¼»¯
-	printf("SGM Initializing...\n");
+    printf("SGM Initializing...\n");
     auto start = std::chrono::steady_clock::now();
     if (!sgm.Initialize(width, height, sgm_option)) {
         std::cout << "SGM³õÊ¼»¯Ê§°Ü£¡" << std::endl;
@@ -110,7 +110,7 @@ int main(int argv, char** argc)
 
     //¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤//
     // Æ¥Åä
-	printf("SGM Matching...\n");
+    printf("SGM Matching...\n");
     start = std::chrono::steady_clock::now();
     // disparityÊý×é±£´æ×ÓÏñËØµÄÊÓ²î½á¹û
     auto disparity = new float32[uint32(width * height)]();
@@ -123,7 +123,7 @@ int main(int argv, char** argc)
     printf("\nSGM Matching...Done! Timing :   %lf s\n", tt.count() / 1000.0);
 
     //¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤¡¤//
-	// ÏÔÊ¾ÊÓ²îÍ¼
+    // ÏÔÊ¾ÊÓ²îÍ¼
     // ×¢Òâ£¬¼ÆËãµãÔÆ²»ÄÜÓÃdisp_matµÄÊý¾Ý£¬ËüÊÇÓÃÀ´ÏÔÊ¾ºÍ±£´æ½á¹ûÓÃµÄ¡£¼ÆËãµãÔÆÒªÓÃÉÏÃæµÄdisparityÊý×éÀïµÄÊý¾Ý£¬ÊÇ×ÓÏñËØ¸¡µãÊý
     cv::Mat disp_mat = cv::Mat(height, width, CV_8UC1);
     float min_disp = width, max_disp = -width;
@@ -171,7 +171,9 @@ int main(int argv, char** argc)
     delete[] bytes_right;
     bytes_right = nullptr;
 
-    system("pause");
+#ifdef _WIN32
+    system("pause"); 
+#endif
     return 0;
 }
 

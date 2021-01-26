@@ -38,3 +38,11 @@ AppWizard uses "TODO:" comments to indicate parts of the source code you
 should add to or customize.
 
 /////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////
+Build and Run the program on linux:
+mkdir build && cd build
+cmake ..
+make
+./SemiGlobalMatching ../../Data/cone/im2.png ../../Data/cone/im6.png 0 64
+#description# argc[1]:left image, argc[2]:right image, argc[3]:min disparity[optional,default:0], argc[4]:max disparity[optional,64]
