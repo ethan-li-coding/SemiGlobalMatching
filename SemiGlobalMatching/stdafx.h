@@ -11,7 +11,7 @@
 #include <stdio.h>
 #include <cstring>
 
-#ifdef WIN32
+#ifdef _WIN32
 #include <tchar.h>
 #endif
 

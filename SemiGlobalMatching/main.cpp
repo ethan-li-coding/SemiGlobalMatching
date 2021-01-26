@@ -171,8 +171,8 @@ int main(int argv, char** argc)
     delete[] bytes_right;
     bytes_right = nullptr;
 
-#ifdef WIN32
-    system("pause");
+#ifdef _WIN32
+    system("pause"); 
 #endif
     return 0;
 }
