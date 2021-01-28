@@ -354,7 +354,7 @@ void sgm_util::CostAggregateDagonal_1(const uint8* img_data, const sint32& width
 			// 下一个像素,这里要多一个边界处理
 			// 这里要多一个边界处理
 			// 沿对角线前进的时候会碰到影像列边界，策略是行号继续按原方向前进，列号到跳到另一边界
-			if (is_forward && current_col == width - 1 && current_row < height - 1) {
+			if (is_forward && current_col > width - 1 && current_row < height - 1) {
 				// 左上->右下，碰右边界
 				cost_init_col = cost_init + (current_row + direction) * width * disp_range;
 				cost_aggr_col = cost_aggr + (current_row + direction) * width * disp_range;
