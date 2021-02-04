@@ -7,6 +7,9 @@ add_definitions(-std=c++11 -O3)
 
 # OpenCV library
 find_package(OpenCV REQUIRED)
+if (OpenCV_VERSION VERSION_LESS 3.0)
+  message(FATAL_ERROR "Error: OpenCV version requires at least 3.0")
+endif()
 link_directories(${OpenCV_LIBRARY_DIRS})
 include_directories(${OpenCV_INCLUDE_DIRS})
 message(STATUS "OpenCV library status:")

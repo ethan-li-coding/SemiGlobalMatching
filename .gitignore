@@ -1,0 +1,9 @@
+.vs
+Release
+out
+
+.vscode
+build
+
+.idea
+cmake-build-debug
