@@ -43,7 +43,7 @@ opencv310
 提取码：aab4
 <br><br>
 解压后放将名称为OpenCV的文件夹复制到到3rdparty文件夹下
-<br><br>若运行时提示缺少opencv_310(d).dll，则在OpenCV文件夹里找到对应的dll文件复制到程序exe所在的目录即可（Opencv\dll\opencv_310(d).dll），带d为debug库，不带d为release库。
+<br><br>若运行时提示缺少opencv_world310(d).dll，则在OpenCV文件夹里找到对应的dll文件复制到程序exe所在的目录即可（Opencv\dll\opencv_world310(d).dll），带d为debug库，不带d为release库。
 <br><br>
 为便于移植，算法是不依赖任何图像库的，只在算法实验部分调用opencv库读取和显示图像，也可替换成其他图像库
 
